@@ -1,5 +1,6 @@
 <?php namespace App;
 
+use App\Jobs\SendReminderMessage;
 use Carbon\Carbon;
 
 class PlanRepository
@@ -30,10 +31,19 @@ class PlanRepository
      */
     public function createPlan(User $user, $data)
     {
-        return $user->plans()->create([
+        return tap($user->plans()->create([
             'scheduled_at' => $this->getPlansScheduledTime($user, $data['text']),
             'response_url' => $data['response_url'],
-        ]);
+        ]), function (Plan $plan) {
+            dispatch(
+                (new SendReminderMessage($plan, trans('messages.plan_hour_reminder')))
+                    ->delay($plan->scheduled_at->subHour())
+            );
+            dispatch(
+                (new SendReminderMessage($plan, trans('messages.plan_reminder')))
+                    ->delay($plan->scheduled_at)
+            );
+        });
     }
 
     /**
