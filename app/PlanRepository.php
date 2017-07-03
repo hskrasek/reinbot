@@ -46,7 +46,7 @@ class PlanRepository
      */
     protected function getPlansScheduledTime(User $user, $text)
     {
-        preg_match('/at (\d(:\d+)?(am|pm|AM|PM)?)/', $text, $matches);
+        preg_match('/at (\d+(?>:\d+)?(?>am|pm|AM|PM)?)/i', $text, $matches);
 
         // Handle empty text here, which also covers incorrect input data
         if (empty($matches)) {
