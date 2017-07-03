@@ -46,31 +46,25 @@ class CommandsController extends Controller
             ]),
             'attachments'   => [
                 [
-                    "text"            => "Can you attend?",
-                    "fallback"        => "Can you attend?",
-                    "callback_id"     => $plan->id,
+                    "text"            => "Group up with me!",
+                    "fallback"        => "Group up with me!",
+                    "callback_id"     => "plans-{$plan->id}",
                     "color"           => "#3AA3E3",
                     "attachment_type" => "default",
                     "actions"         => [
                         [
                             "name"  => "rsvp",
-                            "text"  => "I'm going",
+                            "text"  => "Let's fight",
                             "style" => "primary",
                             "type"  => "button",
-                            "value" => "going"
+                            "value" => 1
                         ],
                         [
                             "name"  => "rsvp",
-                            "text"  => "Maybe",
-                            "type"  => "button",
-                            "value" => "maybe"
-                        ],
-                        [
-                            "name"  => "rsvp",
-                            "text"  => "Can't go",
+                            "text"  => "Me? NEVER!",
                             "style" => "danger",
                             "type"  => "button",
-                            "value" => "cant",
+                            "value" => 0
                         ]
                     ]
                 ]
