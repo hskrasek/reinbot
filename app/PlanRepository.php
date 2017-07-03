@@ -9,6 +9,18 @@ class PlanRepository
     const DEFAULT_TIMEZONE = 'America/Chicago';
 
     /**
+     * Get a Plan by its ID
+     *
+     * @param int $id
+     *
+     * @return \App\Plan
+     */
+    public function getById($id)
+    {
+        return Plan::with('rsvps')->find($id);
+    }
+
+    /**
      * Creates a plan belonging to a user, based on command data.
      *
      * @param \App\User $user
@@ -20,6 +32,7 @@ class PlanRepository
     {
         return $user->plans()->create([
             'scheduled_at' => $this->getPlansScheduledTime($user, $data['text']),
+            'response_url' => $data['response_url'],
         ]);
     }
 
@@ -33,7 +46,7 @@ class PlanRepository
      */
     protected function getPlansScheduledTime(User $user, $text)
     {
-        preg_match('/at (\d(am|pm|AM|PM)?)/', $text, $matches);
+        preg_match('/at (\d(:\d+)?(am|pm|AM|PM)?)/', $text, $matches);
 
         // Handle empty text here, which also covers incorrect input data
         if (empty($matches)) {
@@ -44,6 +57,10 @@ class PlanRepository
             $matches[1] = $matches[1] . 'pm';
         }
 
-        return Carbon::parse($matches[1], $user->timezone);
+        $time = Carbon::parse($matches[1], $user->timezone);
+
+        $time->timezone = 'UTC';
+
+        return $time;
     }
 }
