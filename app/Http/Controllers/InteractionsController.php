@@ -47,6 +47,10 @@ class InteractionsController extends Controller
 
         $rsvp = $this->rsvps->rsvpUserToPlan($user, $plan, $payload);
 
+        if (!$rsvp) {
+            return response('', 200);
+        }
+
         return [
             'response_type'    => 'in_channel',
             'replace_original' => false,

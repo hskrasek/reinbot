@@ -54,7 +54,7 @@ class CommandsController extends Controller
                     "actions"         => [
                         [
                             "name"  => "rsvp",
-                            "text"  => "Let's fight",
+                            "text"  => "Let's FIGHT!",
                             "style" => "primary",
                             "type"  => "button",
                             "value" => 1

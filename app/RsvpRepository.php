@@ -20,8 +20,12 @@ class RsvpRepository
             $rsvp = $plan->rsvps()->create(['user_id' => $user->id]);
         }
 
+        if ($rsvp->response == $response) {
+            return false;
+        }
+
         $rsvp->where(['user_id' => $user->id, 'plan_id' => $plan->id])->update(['response' => $response]);
 
-        return $rsvp;
+        return Rsvp::where(['user_id' => $user->id, 'plan_id' => $plan->id])->first();
     }
 }

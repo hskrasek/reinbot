@@ -35,13 +35,14 @@ class PlanRepository
             'scheduled_at' => $this->getPlansScheduledTime($user, $data['text']),
             'response_url' => $data['response_url'],
         ]), function (Plan $plan) {
-            dispatch(
-                (new SendReminderMessage($plan, trans('messages.plan_hour_reminder')))
-                    ->delay($plan->scheduled_at->subHour())
-            );
+            $scheduledAt = clone $plan->scheduled_at;
             dispatch(
                 (new SendReminderMessage($plan, trans('messages.plan_reminder')))
-                    ->delay($plan->scheduled_at)
+                    ->delay($scheduledAt)
+            );
+            dispatch(
+                (new SendReminderMessage($plan, trans('messages.plan_hour_reminder')))
+                    ->delay($scheduledAt->subHour())
             );
         });
     }
@@ -60,7 +61,11 @@ class PlanRepository
 
         // Handle empty text here, which also covers incorrect input data
         if (empty($matches)) {
-            return Carbon::parse(self::DEFAULT_TIME, self::DEFAULT_TIMEZONE);
+            $time = Carbon::parse(self::DEFAULT_TIME, self::DEFAULT_TIMEZONE);
+
+            $time->timezone = 'UTC';
+
+            return $time;
         }
 
         if (!ends_with($matches[1], ['am', 'pm', 'AM', 'PM'])) {
