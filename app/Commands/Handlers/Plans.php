@@ -10,7 +10,9 @@ use Spatie\SlashCommand\Response;
 
 class Plans extends SignatureHandler
 {
-    public $signature = 'reinbot plans {time}';
+    public $signature = 'reinbot plans {time : The time you want the plans to happen at}';
+
+    public $description = 'Creates plans to game together.';
 
     /**
      * Handle the given request. Remember that Slack expects a response
