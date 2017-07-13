@@ -26,9 +26,15 @@ class CreatePlans extends SignatureHandler
     public function handle(Request $request): Response
     {
         $user = app(UserRepository::class)->getBySlackId($request->userId);
+
+        if (app(PlanRepository::class)->findPlanAtRequestedTime($user, $this->getArgument('time'))) {
+            return $this->respondToSlack('A plan already exists at that time, use `/rienbot rsvp` to rsvp')
+                        ->displayResponseToUserWhoTypedCommand();
+        }
+
         $plan = app(PlanRepository::class)->createPlan($user, $this->getArgument('time'), $request->responseUrl);
 
-        $response = $this
+        return $this
             ->respondToSlack(trans('messages.plan_text', [
                 'user_id'        => $user->slack_user_id,
                 'mention'        => $user->username,
@@ -53,9 +59,5 @@ class CreatePlans extends SignatureHandler
                                     ->setValue(0)
                           )
             );
-
-        \Log::debug('response.data', json_decode($response->getIlluminateResponse()->getContent(), true));
-
-        return $response;
     }
 }

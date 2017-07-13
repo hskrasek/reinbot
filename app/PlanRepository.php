@@ -16,7 +16,7 @@ class PlanRepository
      *
      * @return \App\Plan
      */
-    public function getById(int $id) : Plan
+    public function getById(int $id): Plan
     {
         return Plan::with('rsvps')->find($id);
     }
@@ -49,6 +49,19 @@ class PlanRepository
     }
 
     /**
+     * Get a plan at the scheduled time.
+     *
+     * @param \App\User $user
+     * @param string    $time
+     *
+     * @return \App\Plan
+     */
+    public function findPlanAtRequestedTime(User $user, string $time): ?Plan
+    {
+        return Plan::where('scheduled_at', $this->getPlansScheduledTime($user, $time))->first();
+    }
+
+    /**
      * Parses the plans scheduled time, using the default otherwise
      *
      * @param \App\User $user
@@ -56,7 +69,7 @@ class PlanRepository
      *
      * @return \Carbon\Carbon
      */
-    protected function getPlansScheduledTime(User $user, string $text) : Carbon
+    protected function getPlansScheduledTime(User $user, string $text): Carbon
     {
         preg_match('/(\d+(?>:\d+)?(?>am|pm|AM|PM)?)/i', $text, $matches);
 
