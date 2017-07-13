@@ -8,7 +8,7 @@ use Spatie\SlashCommand\Handlers\SignatureHandler;
 use Spatie\SlashCommand\Request;
 use Spatie\SlashCommand\Response;
 
-class Plans extends SignatureHandler
+class CreatePlans extends SignatureHandler
 {
     public $signature = 'reinbot plans {time : The time you want the plans to happen at}';
 
