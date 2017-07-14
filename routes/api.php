@@ -11,11 +11,6 @@
 |
 */
 
-Route::any('commands', [
-    'as'   => 'commands',
-    'uses' => 'CommandsController'
-]);
-
 Route::any('interactions', [
     'as'   => 'interactions',
     'uses' => 'InteractionsController'

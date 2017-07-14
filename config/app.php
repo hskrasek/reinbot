@@ -168,6 +168,7 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         Lisennk\Laravel\SlackWebApi\Providers\SlackApiServiceProvider::class,
+        Spatie\SlashCommand\SlashCommandServiceProvider::class,
 
         /*
          * Application Service Providers...
