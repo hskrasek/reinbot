@@ -42,12 +42,14 @@ class InteractionsController extends Controller
     {
         $payload  = json_decode($request->input('payload'), true);
         $response = (bool) array_get($payload, 'actions.0.value');
+        \Log::debug('interaction', $payload);
 
+        /** @var \App\User $user */
         $user = $this->users->getBySlackId(array_get($payload, 'user.id'));
         $plan = $this->plans->getById(explode('-', array_get($payload, 'callback_id'))[1]);
 
         $rsvp = $this->rsvps->getRsvpForUser($user, $plan);
-
+        \Log::debug('rsvp', $rsvp->toArray());
         if ($rsvp->response === $response && $rsvp->exists) {
             return [
                 'response_type'    => 'ephemeral',
@@ -56,7 +58,9 @@ class InteractionsController extends Controller
             ];
         }
 
-        $rsvp = app(RsvpRepository::class)->rsvpUserToPlan($rsvp, $response);
+        $rsvp = $this->rsvps->rsvpUserToPlan($rsvp, $response);
+
+        \Log::debug('rsvp.updated', $rsvp->toArray());
 
         return [
             'response_type'    => 'in_channel',

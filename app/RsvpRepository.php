@@ -22,9 +22,8 @@ class RsvpRepository
      */
     public function rsvpUserToPlan(Rsvp $rsvp, bool $response): Rsvp
     {
-        $rsvp->response = $response;
-        $rsvp->save();
+        $rsvp->where(['user_id' => $rsvp->user_id, 'plan_id' => $rsvp->plan_id])->update(['response' => $response]);
 
-        return $rsvp;
+        return $rsvp->where(['user_id' => $rsvp->user_id, 'plan_id' => $rsvp->plan_id])->first();
     }
 }
