@@ -35,7 +35,7 @@ class CreatePlans extends SignatureHandler
         $plan = app(PlanRepository::class)->createPlan($user, $this->getArgument('time'), $request->responseUrl);
 
         return $this
-            ->respondToSlack(trans('messages.plan_text', [
+            ->respondToSlack(trans('messages.plans.text', [
                 'user_id'        => $user->slack_user_id,
                 'mention'        => $user->username,
                 'time'           => $plan->scheduled_at->timestamp,

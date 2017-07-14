@@ -29,14 +29,14 @@ class RsvpToPlan extends SignatureHandler
         $response = strtolower($this->getArgument('response'));
 
         if (!in_array($response, ['yes', 'no'])) {
-            return $this->respondToSlack('You must respond with a `yes` or `no` answer')
+            return $this->respondToSlack(trans('messages.errors.plans.yes_no'))
                         ->displayResponseToUserWhoTypedCommand();
         }
 
         $response = $response === 'yes' ? true : false;
 
         if (!$plan = app(PlanRepository::class)->getNextPlan()) {
-            return $this->respondToSlack('No up coming plans, try creating one with `/reinbot plans`')
+            return $this->respondToSlack(trans('messages.errors.plans.no_plan'))
                         ->displayResponseToUserWhoTypedCommand();
 
         }
@@ -45,14 +45,14 @@ class RsvpToPlan extends SignatureHandler
         $rsvp = app(RsvpRepository::class)->getRsvpForUser($user, $plan);
 
         if ($rsvp->response === $response && $rsvp->exists) {
-            return $this->respondToSlack('You\'ve already RSVPed to this plan')
+            return $this->respondToSlack(trans('messages.errors.plans.already_rsvp'))
                         ->displayResponseToUserWhoTypedCommand();
         }
 
         $rsvp = app(RsvpRepository::class)->rsvpUserToPlan($rsvp, $response);
 
         return $this->respondToSlack(
-            trans('messages.plan_rsvp', [
+            trans('messages.plans.rsvp', [
                 'user_id' => $user->slack_user_id,
                 'mention' => $user->username,
                 'rsvp'    => $rsvp->response ? 'Going' : 'Can\'t go'

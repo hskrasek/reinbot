@@ -40,21 +40,28 @@ class InteractionsController extends Controller
 
     public function __invoke(Request $request)
     {
-        $payload = json_decode($request->input('payload'), true);
+        $payload  = json_decode($request->input('payload'), true);
+        $response = (bool) array_get($payload, 'actions.0.value');
 
         $user = $this->users->getBySlackId(array_get($payload, 'user.id'));
         $plan = $this->plans->getById(explode('-', array_get($payload, 'callback_id'))[1]);
 
-        $rsvp = $this->rsvps->rsvpUserToPlan($user, $plan, $payload);
+        $rsvp = $this->rsvps->getRsvpForUser($user, $plan);
 
-        if (!$rsvp) {
-            return response('', 200);
+        if ($rsvp->response === $response && $rsvp->exists) {
+            return [
+                'response_type'    => 'ephemeral',
+                'replace_original' => false,
+                'text'             => trans('messages.errors.plans.already_rsvp'),
+            ];
         }
+
+        $rsvp = app(RsvpRepository::class)->rsvpUserToPlan($rsvp, $response);
 
         return [
             'response_type'    => 'in_channel',
             'replace_original' => false,
-            'text'             => $this->trans->trans('messages.plan_rsvp', [
+            'text'             => $this->trans->trans('messages.plans.rsvp', [
                 'user_id' => $user->slack_user_id,
                 'mention' => $user->username,
                 'rsvp'    => $rsvp->response ? 'Going' : 'Can\'t go'

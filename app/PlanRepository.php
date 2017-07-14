@@ -38,11 +38,11 @@ class PlanRepository
         ]), function (Plan $plan) {
             $scheduledAt = clone $plan->scheduled_at;
             dispatch(
-                (new SendReminderMessage($plan, trans('messages.plan_reminder')))
+                (new SendReminderMessage($plan, trans('messages.plans.reminder')))
                     ->delay($scheduledAt)
             );
             dispatch(
-                (new SendReminderMessage($plan, trans('messages.plan_hour_reminder')))
+                (new SendReminderMessage($plan, trans('messages.plans.hour_reminder')))
                     ->delay($scheduledAt->subHour())
             );
         });
