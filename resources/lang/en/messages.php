@@ -2,10 +2,13 @@
 
 return [
     'plans'  => [
-        'text'          => '<!everyone>, <@:user_id|:mention> started a plan <!date^:time^{date_pretty} at {time}|:time_formatted>.',
-        'rsvp'          => '<@:user_id|:mention> responded :rsvp',
-        'hour_reminder' => '<!everyone>! I\'m escorting the payload in 1 hour.',
-        'reminder'      => '<!everyone>! Moving the payload, join me.',
+        'text'            => '<!everyone>, <@:user_id|:mention> started a plan <!date^:time^{date_pretty} at {time}|:time_formatted>.',
+        'attachment_text' => 'Group up with me!',
+        'rsvp_yes'        => 'Let\'s FIGHT!',
+        'rsvp_no'         => 'Me? NEVER!',
+        'rsvp'            => '<@:user_id|:mention> responded :rsvp',
+        'hour_reminder'   => '<!everyone>! I\'m escorting the payload in 1 hour.',
+        'reminder'        => '<!everyone>! Moving the payload, join me.',
     ],
     'errors' => [
         'plans' => [

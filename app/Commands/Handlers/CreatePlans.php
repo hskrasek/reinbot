@@ -44,17 +44,17 @@ class CreatePlans extends SignatureHandler
             ->displayResponseToEveryoneOnChannel()
             ->withAttachment(
                 Attachment::create()
-                          ->setText('Group up with me!')
-                          ->setFallback('Group up with me!')
+                          ->setText(trans('messages.plans.attachment_text'))
+                          ->setFallback(trans('messages.plans.attachment_text'))
                           ->setColor('#3AA3E3')
                           ->setCallbackId("plans-{$plan->id}")
                           ->addAction(
-                              Action::create('rsvp', 'Let\'s FIGHT!', Action::TYPE_BUTTON)
+                              Action::create('rsvp', trans('messages.plans.rsvp_yes'), Action::TYPE_BUTTON)
                                     ->setStyle(Action::STYLE_PRIMARY)
                                     ->setValue(1)
                           )
                           ->addAction(
-                              Action::create('rsvp', 'Me? NEVER!', Action::TYPE_BUTTON)
+                              Action::create('rsvp', trans('messages.plans.rsvp_no'), Action::TYPE_BUTTON)
                                     ->setStyle(Action::STYLE_DANGER)
                                     ->setValue(0)
                           )
