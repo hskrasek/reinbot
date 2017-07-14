@@ -35,7 +35,7 @@ class CreatePlans extends SignatureHandler
         $plan = app(PlanRepository::class)->createPlan($user, $this->getArgument('time'), $request->responseUrl);
 
         return $this
-            ->respondToSlack(trans('messages.plans.text', [
+            ->respondToSlack(__('messages.plans.text', [
                 'user_id'        => $user->slack_user_id,
                 'mention'        => $user->username,
                 'time'           => $plan->scheduled_at->timestamp,
@@ -44,17 +44,17 @@ class CreatePlans extends SignatureHandler
             ->displayResponseToEveryoneOnChannel()
             ->withAttachment(
                 Attachment::create()
-                          ->setText(trans('messages.plans.attachment_text'))
-                          ->setFallback(trans('messages.plans.attachment_text'))
+                          ->setText(__('messages.plans.attachment_text'))
+                          ->setFallback(__('messages.plans.attachment_text'))
                           ->setColor('#3AA3E3')
                           ->setCallbackId("plans-{$plan->id}")
                           ->addAction(
-                              Action::create('rsvp', trans('messages.plans.rsvp_yes'), Action::TYPE_BUTTON)
+                              Action::create('rsvp', __('messages.plans.rsvp_yes'), Action::TYPE_BUTTON)
                                     ->setStyle(Action::STYLE_PRIMARY)
                                     ->setValue(1)
                           )
                           ->addAction(
-                              Action::create('rsvp', trans('messages.plans.rsvp_no'), Action::TYPE_BUTTON)
+                              Action::create('rsvp', __('messages.plans.rsvp_no'), Action::TYPE_BUTTON)
                                     ->setStyle(Action::STYLE_DANGER)
                                     ->setValue(0)
                           )

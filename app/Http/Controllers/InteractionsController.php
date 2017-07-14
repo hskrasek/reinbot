@@ -52,7 +52,7 @@ class InteractionsController extends Controller
             return [
                 'response_type'    => 'ephemeral',
                 'replace_original' => false,
-                'text'             => trans('messages.errors.plans.already_rsvp'),
+                'text'             => __('messages.errors.plans.already_rsvp'),
             ];
         }
 
