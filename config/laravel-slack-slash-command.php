@@ -21,6 +21,8 @@ return [
         //add your own handlers here
         App\Commands\Handlers\CreatePlans::class,
 
+        App\Commands\Handlers\RsvpToPlan::class,
+
         //this handler will display instructions on how to use the various commands.
         Spatie\SlashCommand\Handlers\Help::class,
 
