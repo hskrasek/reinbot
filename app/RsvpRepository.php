@@ -2,30 +2,29 @@
 
 class RsvpRepository
 {
+    public function getRsvpForUser(User $user, Plan $plan): Rsvp
+    {
+        /** @var \App\Rsvp $rsvp */
+        if (!$rsvp = $plan->rsvps()->where('user_id', $user->id)->first()) {
+            $rsvp = $plan->rsvps()->make(['user_id' => $user->id]);
+        }
+
+        return $rsvp;
+    }
+
     /**
      * RSVPs the user to the plan
      *
-     * @param \App\User $user
-     * @param \App\Plan $plan
-     * @param array     $payload
+     * @param \App\Rsvp $rsvp
+     * @param bool      $response
      *
      * @return \App\Rsvp
      */
-    public function rsvpUserToPlan(User $user, Plan $plan, array $payload)
+    public function rsvpUserToPlan(Rsvp $rsvp, bool $response): Rsvp
     {
-        $response = (bool) array_get($payload, 'actions.0.value');
+        $rsvp->response = $response;
+        $rsvp->save();
 
-        /** @var \App\Rsvp $rsvp */
-        if (!$rsvp = $plan->rsvps()->where('user_id', $user->id)->first()) {
-            $rsvp = $plan->rsvps()->create(['user_id' => $user->id]);
-        }
-
-        if ($rsvp->response == $response) {
-            return false;
-        }
-
-        $rsvp->where(['user_id' => $user->id, 'plan_id' => $plan->id])->update(['response' => $response]);
-
-        return Rsvp::where(['user_id' => $user->id, 'plan_id' => $plan->id])->first();
+        return $rsvp;
     }
 }

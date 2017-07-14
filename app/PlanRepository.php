@@ -49,6 +49,16 @@ class PlanRepository
     }
 
     /**
+     * Get the next upcoming plan of the day, if there is one.
+     *
+     * @return \App\Plan
+     */
+    public function getNextPlan(): ?Plan
+    {
+        return Plan::whereBetween('scheduled_at', [Carbon::now(), Carbon::now()->endOfDay()])->first();
+    }
+
+    /**
      * Get a plan at the scheduled time.
      *
      * @param \App\User $user
