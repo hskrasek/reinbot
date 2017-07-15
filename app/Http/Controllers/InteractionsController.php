@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\UpdatePlanMessage;
 use App\PlanRepository;
 use App\RsvpRepository;
 use App\UserRepository;
@@ -58,6 +59,8 @@ class InteractionsController extends Controller
         }
 
         $rsvp = $this->rsvps->rsvpUserToPlan($rsvp, $response);
+
+        dispatch(new UpdatePlanMessage($payload, $plan));
 
         return [
             'response_type'    => 'in_channel',
