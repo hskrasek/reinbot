@@ -12,7 +12,7 @@ use Spatie\SlashCommand\Response;
 
 class CreatePlans extends SignatureHandler
 {
-    public $signature = 'reinbot plans {time : The time you want the plans to happen at}';
+    public $signature = 'reinbot plans {time : The time you want the plans to happen at. E.g `9pm`}';
 
     public $description = 'Creates plans to game together.';
 
