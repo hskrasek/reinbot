@@ -53,7 +53,7 @@ class CreatePlans extends SignatureHandler
                 Attachment::create()
                           ->setText(__('messages.plans.attachment_text'))
                           ->setFallback(__('messages.plans.attachment_text'))
-                          ->setColor('#3AA3E3')
+                          ->setColor('#5d5956')
                           ->setCallbackId("plans-{$plan->id}")
                           ->addAction(
                               Action::create('rsvp', __('messages.plans.rsvp_yes'), Action::TYPE_BUTTON)
