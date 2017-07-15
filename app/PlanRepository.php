@@ -41,10 +41,13 @@ class PlanRepository
                 (new SendReminderMessage($plan, __('messages.plans.reminder')))
                     ->delay($scheduledAt)
             );
-            dispatch(
-                (new SendReminderMessage($plan, __('messages.plans.hour_reminder')))
-                    ->delay($scheduledAt->subHour())
-            );
+
+            if (Carbon::now()->diffInHours($scheduledAt) > 1) {
+                dispatch(
+                    (new SendReminderMessage($plan, __('messages.plans.hour_reminder')))
+                        ->delay($scheduledAt->subHour())
+                );
+            }
         });
     }
 
