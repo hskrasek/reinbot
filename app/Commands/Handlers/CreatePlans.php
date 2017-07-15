@@ -27,6 +27,11 @@ class CreatePlans extends SignatureHandler
     {
         $user = app(UserRepository::class)->getBySlackId($request->userId);
 
+        if ($this->timeIsInThePast($user, $this->getArgument('time'))) {
+            return $this->respondToSlack('You may not create a plan in the past')
+                        ->displayResponseToUserWhoTypedCommand();
+        }
+
         if (app(PlanRepository::class)->findPlanAtRequestedTime($user, $this->getArgument('time'))) {
             return $this->respondToSlack('A plan already exists at that time, use `/rienbot rsvp` to rsvp')
                         ->displayResponseToUserWhoTypedCommand();
@@ -59,5 +64,22 @@ class CreatePlans extends SignatureHandler
                                     ->setValue(0)
                           )
             );
+    }
+
+    /**
+     * Determine if the requested plan time is in the past.
+     *
+     * @param \App\User $user
+     * @param string    $time
+     *
+     * @return bool
+     */
+    private function timeIsInThePast(User $user, string $time): bool
+    {
+        $time = Carbon::parse($time, $user->timezone);
+
+        $time->timezone = 'UTC';
+
+        return $time->isPast();
     }
 }
