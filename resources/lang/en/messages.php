@@ -19,6 +19,6 @@ return [
             'yes_no'       => 'You must respond with a `yes` or `no` answer',
             'no_plan'      => 'No up coming plans, try creating one with `/reinbot plans`',
             'already_rsvp' => 'You\'ve already RSVPed to this plan',
-        ]
-    ]
+        ],
+    ],
 ];

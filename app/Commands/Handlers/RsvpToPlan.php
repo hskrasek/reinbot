@@ -11,7 +11,7 @@ class RsvpToPlan extends SignatureHandler
 {
     const DEFAULT_LIMIT = 5;
 
-    public $signature = 'reinbot rsvp {response : Whether or not you can make it to the plan}';
+    public $signature = 'reinbot rsvp {response : `yes` or `no`, dependant on if you can make it or not}';
 
     public $description = 'RSVP to the next active plan';
 

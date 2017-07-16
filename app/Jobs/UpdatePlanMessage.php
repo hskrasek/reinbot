@@ -58,7 +58,7 @@ class UpdatePlanMessage implements ShouldQueue
             return $rsvpGroup->map(function (Rsvp $rsvp) {
                 return "<@{$rsvp->user->slack_user_id}|{$rsvp->user->username}>";
             });
-        })->flatMap(function (\Illuminate\Support\Collection $rsvpGroup, $response) use ($attachment) {
+        })->reverse()->flatMap(function (\Illuminate\Support\Collection $rsvpGroup, $response) {
             return [($response ? 'Going' : 'Can\'t go') => trim($rsvpGroup->implode(', '), ',')];
         })->each(function ($rsvpList, $response) use (&$attachment) {
             $attachment['fields'][] = [
