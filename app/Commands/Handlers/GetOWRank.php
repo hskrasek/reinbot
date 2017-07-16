@@ -31,30 +31,29 @@ class GetOWRank extends SignatureHandler
         $gamertag = $this->getArgument('gamertag');
 
         try {
-            $response = (new GuzzleHttp\Client())
-                ->get("http://ow-api.herokuapp.com/profile/xbl/us/{$gamertag}");
+            $response = (new GuzzleHttp\Client())->get("http://ow-api.herokuapp.com/profile/xbl/us/{$gamertag}");
             $body = json_decode($response->getBody(), true);
 
             return $this->respondToSlack('')
-                ->displayResponseToEveryoneOnChannel()
-                ->withAttachment(
-                    Attachment::create()
-                        ->setAuthorName($gamertag)
-                        ->setAuthorIcon($body['portrait'])
-                        ->setTitle(__('messages.owrank.title'))
-                        ->setFallback($body['competitive']['rank'])
-                        ->setColor('#DE58E6')
-                        ->setFields([
-                            AttachmentField::create('SR', $body['competitive']['rank'])
-                                ->displaySideBySide(),
-                            AttachmentField::create('Games Won', $body['games']['competitive']['won'])
-                                ->displaySideBySide(),
-                        ])
-                        ->setThumbUrl($body['competitive']['rank_img'])
-                );
-        } catch (ClientException $e) {
+                        ->displayResponseToEveryoneOnChannel()
+                        ->withAttachment(
+                            Attachment::create()
+                                      ->setAuthorName($gamertag)
+                                      ->setAuthorIcon($body['portrait'])
+                                      ->setTitle(__('messages.owrank.title'))
+                                      ->setFallback($body['competitive']['rank'])
+                                      ->setColor('#DE58E6')
+                                      ->setFields([
+                                          AttachmentField::create('SR', $body['competitive']['rank'])
+                                                         ->displaySideBySide(),
+                                          AttachmentField::create('Games Won', $body['games']['competitive']['won'])
+                                                         ->displaySideBySide(),
+                                      ])
+                                      ->setThumbUrl($body['competitive']['rank_img'])
+                        );
+        } catch (ClientException $exception) {
             return $this->respondToSlack(__('messages.owrank.error'))
-                ->displayResponseToUserWhoTypedCommand();
+                        ->displayResponseToUserWhoTypedCommand();
         }
     }
 }
