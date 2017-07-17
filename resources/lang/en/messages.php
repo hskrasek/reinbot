@@ -10,6 +10,10 @@ return [
         'hour_reminder'   => '<!everyone>! I\'m escorting the payload in 1 hour.',
         'reminder'        => '<!everyone>! Moving the payload, join me.',
     ],
+    'owrank' => [
+        'title' => 'Current Season',
+        'error' => 'Woah! I wasn\'t able to find that gamertag, my friend.',
+    ],
     'errors' => [
         'plans' => [
             'yes_no'       => 'You must respond with a `yes` or `no` answer',

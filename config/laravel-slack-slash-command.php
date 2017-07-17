@@ -23,6 +23,8 @@ return [
 
         App\Commands\Handlers\RsvpToPlan::class,
 
+        App\Commands\Handlers\GetOWRank::class,
+
         //this handler will display instructions on how to use the various commands.
         Spatie\SlashCommand\Handlers\Help::class,
 
