@@ -11,11 +11,8 @@ class EventsController extends Controller
     {
         /** @var BotMan $botMan */
         $botMan = app('botman');
-        \Log::debug('request', $request->all());
 
-        $botMan->hears('<@U6A8LC5L6> start a plan for {time}', function (BotMan $botMan, $time) {
-            $botMan->types()->reply('Creating a plan for ' . $time);
-        });
+        $botMan->hears('<@U6A8LC5L6> start a plan for {time}', 'App\Commands\Bot\Handlers\CreatePlan@handle');
 
         $botMan->listen();
 
