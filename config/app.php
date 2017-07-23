@@ -169,6 +169,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Lisennk\Laravel\SlackWebApi\Providers\SlackApiServiceProvider::class,
         Spatie\SlashCommand\SlashCommandServiceProvider::class,
+        Mpociot\BotMan\BotManServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'SlackApi' => \Lisennk\Laravel\SlackWebApi\Facades\SlackApi::class,
+        'BotMan' => Mpociot\BotMan\Facades\BotMan::class
     ],
 
 ];
