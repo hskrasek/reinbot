@@ -42,6 +42,13 @@ class UpdatePlanMessage implements ShouldQueue
     {
         $originalMessage = array_get($this->payload, 'original_message');
         $originalMessage = $this->updateAttendanceFields($originalMessage);
+
+        if (!empty($this->plan->message_ts)) {
+            $this->updateMessageViaTimestamp($guzzle, $originalMessage);
+
+            return;
+        }
+
         $guzzle->post(array_get($this->payload, 'response_url'), [
             'json' => $originalMessage,
         ]);
@@ -72,5 +79,25 @@ class UpdatePlanMessage implements ShouldQueue
         array_set($originalMessage, 'attachments.0', $attachment);
 
         return $originalMessage;
+    }
+
+    /**
+     * Updates the message via the message timestamp.
+     *
+     * @param \GuzzleHttp\Client $guzzle
+     * @param array              $originalMessage
+     */
+    protected function updateMessageViaTimestamp(Client $guzzle, array $originalMessage): void
+    {
+        $originalMessage['attachments'] = json_encode($originalMessage['attachments']);
+        $originalMessage['channel']     = array_get($this->payload, 'channel.id');
+        $guzzle->post('https://slack.com/api/chat.update', [
+            'body'    => http_build_query(
+                array_merge($originalMessage, ['token' => config('services.botman.slack_token')])
+            ),
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+        ]);
     }
 }
