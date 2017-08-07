@@ -41,6 +41,11 @@ class UpdatePlanMessage implements ShouldQueue
     public function handle(Client $guzzle)
     {
         $originalMessage = array_get($this->payload, 'original_message');
+
+        if (empty($originalMessage) && !empty($this->plan->message_ts)) {
+            $originalMessage = $this->getOriginalMessageContent($guzzle);
+        }
+
         $originalMessage = $this->updateAttendanceFields($originalMessage);
 
         if (!empty($this->plan->message_ts)) {
@@ -91,13 +96,34 @@ class UpdatePlanMessage implements ShouldQueue
     {
         $originalMessage['attachments'] = json_encode($originalMessage['attachments']);
         $originalMessage['channel']     = array_get($this->payload, 'channel.id');
+
         $guzzle->post('https://slack.com/api/chat.update', [
             'body'    => http_build_query(
-                array_merge($originalMessage, ['token' => config('services.botman.slack_token')])
+                array_merge($originalMessage, ['token' => config('services.botman.slack_user_token')])
             ),
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
         ]);
+    }
+
+    /**
+     * @param \GuzzleHttp\Client $guzzle
+     *
+     * @return array
+     */
+    protected function getOriginalMessageContent(Client $guzzle)
+    {
+        $response = $guzzle->get('https://slack.com/api/groups.history', [
+            'query' => [
+                'token'     => config('services.botman.slack_user_token'),
+                'latest'    => $this->plan->message_ts,
+                'inclusive' => true,
+                'limit'     => 1,
+                'channel'   => array_get($this->payload, 'channel.id'),
+            ],
+        ]);
+
+        return head(json_decode((string) $response->getBody(), true)['messages']);
     }
 }
