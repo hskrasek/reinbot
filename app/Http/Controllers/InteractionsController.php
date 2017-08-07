@@ -68,7 +68,7 @@ class InteractionsController extends Controller
             'text'             => $this->trans->trans('messages.plans.rsvp', [
                 'user_id' => $user->slack_user_id,
                 'mention' => $user->username,
-                'rsvp'    => $rsvp->response ? 'Going' : 'Can\'t go'
+                'rsvp'    => $rsvp->response ? 'Going' : 'Can\'t go',
             ]),
         ];
     }
