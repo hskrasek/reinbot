@@ -3,7 +3,6 @@
 use App\Commands\Action;
 use App\Commands\Attachment;
 use App\PlanRepository;
-use App\RsvpRepository;
 use App\User;
 use App\UserRepository;
 use Carbon\Carbon;
@@ -38,57 +37,13 @@ class CreatePlan
         }
 
         if ($plan = $this->plans->findPlanAtRequestedTime($user, $time)) {
-            $bot->ask('A plan already exists at that time. Would you like to rsvp? (yes or no)', [
-                [
-                    'pattern'  => 'yes|yep|sure',
-                    'callback' => function () use ($bot, $user, $plan) {
-                        $rsvp = app(RsvpRepository::class)->getRsvpForUser($user, $plan);
-
-                        if ($rsvp->response && $rsvp->exists) {
-                            $bot->reply(__('messages.errors.plans.already_rsvp'));
-
-                            return;
-                        }
-
-                        $rsvp = app(RsvpRepository::class)->rsvpUserToPlan($rsvp, true);
-
-                        $bot->sendRequest('chat.postMessage', [
-                            'channel' => $bot->getMessage()->getChannel(),
-                            'text'    => __('messages.plans.rsvp', [
-                                'user_id' => $user->slack_user_id,
-                                'mention' => $user->username,
-                                'rsvp'    => $rsvp->response ? 'Going' : 'Can\'t go',
-                            ]),
-                        ]);
-
-                        return;
-                    },
-                ],
-                [
-                    'pattern'  => 'no|nope|nah',
-                    'callback' => function () use ($bot, $user, $plan) {
-                        $rsvp = app(RsvpRepository::class)->getRsvpForUser($user, $plan);
-
-                        if (!$rsvp->response && $rsvp->exists) {
-                            $bot->reply(__('messages.errors.plans.already_rsvp'));
-
-                            return;
-                        }
-
-                        $rsvp = app(RsvpRepository::class)->rsvpUserToPlan($rsvp, false);
-
-                        $bot->sendRequest('chat.postMessage', [
-                            'channel' => $bot->getMessage()->getChannel(),
-                            'text'    => __('messages.plans.rsvp', [
-                                'user_id' => $user->slack_user_id,
-                                'mention' => $user->username,
-                                'rsvp'    => $rsvp->response ? 'Going' : 'Can\'t go',
-                            ]),
-                        ]);
-
-                        return;
-                    },
-                ],
+            $bot->sendRequest('chat.postMessage', [
+                'channel'      => $bot->getMessage()->getChannel(),
+                'text'         => __('messages.plans.exists_link', [
+                    'channel'   => $bot->getMessage()->getChannel(),
+                    'timestamp' => str_replace('.', '', $plan->message_ts),
+                ]),
+                'unfurl_links' => true,
             ]);
 
             return;
@@ -97,7 +52,7 @@ class CreatePlan
         $plan = $this->plans->createPlan($user, $time, '');
 
         /** @var \Symfony\Component\HttpFoundation\Response $response */
-        $response = $bot->sendRequest('chat.postMessage', [
+        $response         = $bot->sendRequest('chat.postMessage', [
             'channel'     => $bot->getMessage()->getChannel(),
             'text'        => __('messages.plans.text', [
                 'user_id'        => $user->slack_user_id,
@@ -123,6 +78,9 @@ class CreatePlan
                           )->toArray(),
             ]),
         ]);
+        $messageData      = json_decode($response->getContent(), true);
+        $plan->message_ts = array_get($messageData, 'ts');
+        $plan->save();
 
         return;
     }
