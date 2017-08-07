@@ -9,7 +9,6 @@ class EventsController extends Controller
 {
     public function __invoke(Request $request)
     {
-        \Log::debug('event', $request->input());
         /** @var BotMan $botMan */
         $botMan = app('botman');
 
