@@ -21,7 +21,7 @@ class EventsController extends Controller
         $botMan->hears('<@U6A8LC5L6> help', function (BotMan $botMan) {
             $botMan->typesAndWaits(2)->reply('I currently am listening to:');
             $botMan->reply('@reinbot start a plan for 9pm');
-            $botMan->reply('@reinbot get overwatch rank for R3v3rb');
+            $botMan->reply('@reinbot get overwatch rank for Rev3rb');
         });
 
         $botMan->listen();
