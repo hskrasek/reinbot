@@ -17,6 +17,12 @@ class EventsController extends Controller
             '<@U6A8LC5L6> (?>who\'s|whos|who) (?>the|is a) bitch\?*',
             'App\Commands\Bot\Handlers\Bitch@handle'
         );
+        $botMan->hears('<@U6A8LC5L6> get overwatch rank for {gamertag}', 'App\Commands\Bot\Handlers\OWRank@handle');
+        $botMan->hears('<@U6A8LC5L6> help', function (BotMan $botMan) {
+            $botMan->typesAndWaits(2)->reply('I currently am listening to:');
+            $botMan->reply('@reinbot start a plan for 9pm');
+            $botMan->reply('@reinbot get overwatch rank for R3v3rb');
+        });
 
         $botMan->listen();
 
