@@ -43,4 +43,9 @@ class Plan extends Model
     {
         return $this->hasMany(Rsvp::class);
     }
+
+    public function hasStarted()
+    {
+        return $this->scheduled_at->isPast();
+    }
 }

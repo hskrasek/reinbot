@@ -48,6 +48,14 @@ class InteractionsController extends Controller
         $user = $this->users->getBySlackId(array_get($payload, 'user.id'));
         $plan = $this->plans->getById(explode('-', array_get($payload, 'callback_id'))[1]);
 
+        if ($plan->hasStarted()) {
+            return [
+                'response_type'    => 'ephemeral',
+                'replace_original' => false,
+                'text'             => __('messages.errors.plans.plan_started'),
+            ];
+        }
+
         $rsvp = $this->rsvps->getRsvpForUser($user, $plan);
 
         if ($rsvp->response === $response && $rsvp->exists) {
