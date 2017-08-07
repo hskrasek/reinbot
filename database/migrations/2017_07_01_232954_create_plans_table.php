@@ -16,9 +16,9 @@ class CreatePlansTable extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id', false, true);
-            $table->timestamp('scheduled_at');
             $table->string('response_url', 2000);
             $table->timestamps();
+            $table->timestamp('scheduled_at')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

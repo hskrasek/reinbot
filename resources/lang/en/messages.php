@@ -9,6 +9,7 @@ return [
         'rsvp'            => '<@:user_id|:mention> responded :rsvp',
         'hour_reminder'   => '<!everyone>! I\'m escorting the payload in 1 hour.',
         'reminder'        => '<!everyone>! Moving the payload, join me.',
+        'exists_link'     => 'A plan already exists at that time. Go here to RSVP: https://getbehindme.slack.com/archives/:channel/p:timestamp',
     ],
     'owrank' => [
         'title' => 'Current Season',

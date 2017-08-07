@@ -13,5 +13,10 @@
 
 Route::any('interactions', [
     'as'   => 'interactions',
-    'uses' => 'InteractionsController'
+    'uses' => 'InteractionsController',
+]);
+
+Route::any('events', [
+    'as'   => 'events',
+    'uses' => 'EventsController',
 ]);

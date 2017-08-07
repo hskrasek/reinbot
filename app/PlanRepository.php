@@ -102,6 +102,7 @@ class PlanRepository
         $time = Carbon::parse($matches[1], $user->timezone);
 
         $time->timezone = 'UTC';
+        $time->second = 0;
 
         return $time;
     }

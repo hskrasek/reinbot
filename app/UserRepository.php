@@ -15,7 +15,7 @@ class UserRepository
         $this->slackApi = $slackApi;
     }
 
-    public function getBySlackId($slackId)
+    public function getBySlackId($slackId): User
     {
         return User::firstOrCreate([
             'slack_user_id' => $slackId,
