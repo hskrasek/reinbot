@@ -29,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
         }
 
-        Horizon::routeSlackNotificationsTo(config('slack.webhooks'));
+        Horizon::routeSlackNotificationsTo(config('slack.development_webhooks'));
     }
 }
