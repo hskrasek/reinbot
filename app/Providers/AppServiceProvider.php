@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,11 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() === 'local') {
             $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
         }
+
+        Horizon::routeSlackNotificationsTo(config('slack.development_webhooks'));
+
+        Horizon::auth(function ($request) {
+            return $request->key = config('services.horizon.key');
+        });
     }
 }
