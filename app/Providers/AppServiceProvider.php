@@ -30,5 +30,9 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Horizon::routeSlackNotificationsTo(config('slack.development_webhooks'));
+
+        Horizon::auth(function ($request) {
+            return $request->key = config('services.horizon.key');
+        });
     }
 }
