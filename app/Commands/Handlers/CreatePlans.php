@@ -1,11 +1,11 @@
 <?php namespace App\Commands\Handlers;
 
-use App\Commands\Action;
-use App\Commands\Attachment;
 use App\PlanRepository;
 use App\User;
 use App\UserRepository;
 use Carbon\Carbon;
+use Spatie\SlashCommand\Attachment;
+use Spatie\SlashCommand\AttachmentAction as Action;
 use Spatie\SlashCommand\Handlers\SignatureHandler;
 use Spatie\SlashCommand\Request;
 use Spatie\SlashCommand\Response;

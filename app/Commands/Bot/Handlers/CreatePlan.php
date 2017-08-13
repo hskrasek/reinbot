@@ -1,12 +1,12 @@
 <?php namespace App\Commands\Bot\Handlers;
 
-use App\Commands\Action;
-use App\Commands\Attachment;
 use App\PlanRepository;
 use App\User;
 use App\UserRepository;
 use Carbon\Carbon;
 use Mpociot\BotMan\BotMan;
+use Spatie\SlashCommand\Attachment;
+use Spatie\SlashCommand\AttachmentAction as Action;
 
 class CreatePlan
 {

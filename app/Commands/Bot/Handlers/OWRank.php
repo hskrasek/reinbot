@@ -1,9 +1,9 @@
 <?php namespace App\Commands\Bot\Handlers;
 
-use App\Commands\Attachment;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Mpociot\BotMan\BotMan;
+use Spatie\SlashCommand\Attachment;
 use Spatie\SlashCommand\AttachmentField;
 
 class OWRank
