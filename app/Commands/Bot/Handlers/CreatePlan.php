@@ -67,12 +67,12 @@ class CreatePlan
                           ->setColor('#5d5956')
                           ->setCallbackId("plans-{$plan->id}")
                           ->addAction(
-                              Action::create('rsvp', __('messages.plans.rsvp_yes'), Action::TYPE_BUTTON)
+                              Action::create('rsvp', __('messages.plans.rsvp_yes'), 'button')
                                     ->setStyle(Action::STYLE_PRIMARY)
                                     ->setValue(1)
                           )
                           ->addAction(
-                              Action::create('rsvp', __('messages.plans.rsvp_no'), Action::TYPE_BUTTON)
+                              Action::create('rsvp', __('messages.plans.rsvp_no'), 'button')
                                     ->setStyle(Action::STYLE_DANGER)
                                     ->setValue(0)
                           )->toArray(),
