@@ -60,7 +60,7 @@ class CreatePlan
                 'time'           => $plan->scheduled_at->timestamp,
                 'time_formatted' => $plan->scheduled_at->toCookieString(),
             ]),
-            'attachments' => json_encode([
+            'attachments' => json_encode(array_filter([
                 Attachment::create()
                           ->setText(__('messages.plans.attachment_text'))
                           ->setFallback(__('messages.plans.attachment_text'))
@@ -76,7 +76,7 @@ class CreatePlan
                                     ->setStyle(Action::STYLE_DANGER)
                                     ->setValue(0)
                           )->toArray(),
-            ]),
+            ])),
         ]);
         $messageData      = json_decode($response->getContent(), true);
         $plan->message_ts = array_get($messageData, 'ts');
