@@ -166,6 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
         Lisennk\Laravel\SlackWebApi\Providers\SlackApiServiceProvider::class,
         Spatie\SlashCommand\SlashCommandServiceProvider::class,
@@ -231,7 +232,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'SlackApi' => \Lisennk\Laravel\SlackWebApi\Facades\SlackApi::class,
-        'BotMan' => Mpociot\BotMan\Facades\BotMan::class
+        'BotMan' => Mpociot\BotMan\Facades\BotMan::class,
+        'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
     ],
 
 ];
