@@ -54,10 +54,12 @@ class AppServiceProvider extends ServiceProvider
 
                     return $promise->then(
                         function (ResponseInterface $response) use ($request) {
-                            $data = \GuzzleHttp\json_decode((string) $response->getBody(), true);
+                            if (str_contains(head($response->getHeader('Content-Type')), 'json')) {
+                                $data = \GuzzleHttp\json_decode((string) $response->getBody(), true);
 
-                            if (!$data['ok']) {
-                                throw new RequestException($data['error'], $request, $response);
+                                if (!$data['ok']) {
+                                    throw new RequestException($data['error'], $request, $response);
+                                }
                             }
 
                             return $response;
