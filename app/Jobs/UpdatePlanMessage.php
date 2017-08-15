@@ -126,4 +126,12 @@ class UpdatePlanMessage implements ShouldQueue
 
         return head(json_decode((string) $response->getBody(), true)['messages']);
     }
+
+    public function failed(\Exception $exception)
+    {
+        \Log::error('plan.update.message.failed', [
+            'exception' => get_class($exception),
+            'message'   => $exception->getMessage(),
+        ]);
+    }
 }
