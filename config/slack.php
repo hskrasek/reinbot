@@ -13,6 +13,4 @@ return [
     'verification_token' => env('SLACK_VERIFICATION_TOKEN'),
 
     'webhooks' => env('SLACK_WEBHOOK_URL'),
-
-    'development_webhooks' => env('SLACK_DEVELOPMENT_WEBHOOK'),
 ];

@@ -39,8 +39,4 @@ return [
         'slack_token'      => env('SLACK_API_TOKEN'),
         'slack_user_token' => env('SLACK_USER_API_TOKEN'),
     ],
-
-    'horizon' => [
-        'key' => env('HORIZON_KEY'),
-    ],
 ];

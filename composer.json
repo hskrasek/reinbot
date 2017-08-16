@@ -9,7 +9,6 @@
         "bugsnag/bugsnag-laravel": "^2.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.4.*",
-        "laravel/horizon": "^0.1.0",
         "laravel/tinker": "~1.0",
         "lisennk/laravel-slack-web-api": "^0.1.1",
         "mpociot/botman": "^1.5",

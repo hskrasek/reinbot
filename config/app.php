@@ -171,7 +171,6 @@ return [
         Lisennk\Laravel\SlackWebApi\Providers\SlackApiServiceProvider::class,
         Spatie\SlashCommand\SlashCommandServiceProvider::class,
         Mpociot\BotMan\BotManServiceProvider::class,
-        Laravel\Horizon\HorizonServiceProvider::class,
 
         /*
          * Application Service Providers...

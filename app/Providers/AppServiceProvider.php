@@ -9,7 +9,6 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Horizon\Horizon;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use function GuzzleHttp\choose_handler;
@@ -36,12 +35,6 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() === 'local') {
             $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
         }
-
-        Horizon::routeSlackNotificationsTo(config('slack.development_webhooks'));
-
-        Horizon::auth(function ($request) {
-            return $request->key = config('services.horizon.key');
-        });
 
         $this->app->singleton(Client::class, function () {
             $stack = new HandlerStack(choose_handler());
