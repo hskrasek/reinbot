@@ -36,6 +36,9 @@ class UserRepository
                 'user' => $slackId
             ]);
         } catch (SlackApiException $e) {
+            \Log::error($e->getMessage(), [
+                'slack_user_id' => $slackId
+            ]);
             $response = [];
         }
 
