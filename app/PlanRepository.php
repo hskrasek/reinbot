@@ -32,7 +32,7 @@ class PlanRepository
      */
     public function createPlan(User $user, string $time, string $responseUrl): Plan
     {
-        return tap($user->plans()->create([
+        return tap($user->plans()->make([
             'scheduled_at' => $this->getPlansScheduledTime($user, $time),
             'response_url' => $responseUrl,
         ]), function (Plan $plan) {

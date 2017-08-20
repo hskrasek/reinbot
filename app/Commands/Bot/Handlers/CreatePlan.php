@@ -79,6 +79,13 @@ class CreatePlan
             ])),
         ]);
         $messageData      = json_decode($response->getContent(), true);
+
+        if (!$messageData['ok']) {
+            $bot->reply("Couldn't create a plan due to: {$messageData['error']}");
+
+            return;
+        }
+
         $plan->message_ts = array_get($messageData, 'ts');
         $plan->save();
 
