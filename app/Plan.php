@@ -39,6 +39,11 @@ class Plan extends Model
         'scheduled_at',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function rsvps()
     {
         return $this->hasMany(Rsvp::class);

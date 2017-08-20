@@ -23,6 +23,7 @@ class EventsController extends Controller
             $botMan->reply('@reinbot start a plan for 9pm');
             $botMan->reply('@reinbot get overwatch rank for Rev3rb');
         });
+        $botMan->hears('<@U6JUKRTE0> debug', 'App\Commands\Bot\Handlers\Debug@handle');
 
         $botMan->listen();
 
