@@ -16,7 +16,8 @@ class Debug
                 return Attachment::create()
                     ->setTitle("Plan $plan->id")
                     ->setAuthorName($plan->user->username)
-                    ->setTimestamp($plan->scheduled_at);
+                    ->setTimestamp($plan->scheduled_at)
+                    ->toArray();
             })->toArray(),
         ]);
     }
