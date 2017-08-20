@@ -27,7 +27,7 @@ class Debug
                                  ->addField(AttachmentField::create('Total RSVPs', $plan->rsvps_count)
                                                            ->doNotDisplaySideBySide())
                                  ->addFields($this->getAttendanceFields($plan))
-                                 ->setFooter('Created via ' . $plan->message_ts ? 'bot user.' : 'slash command.')
+                                 ->setFooter('Created via ' . ($plan->message_ts ? 'bot user.' : 'slash command.'))
                                  ->toArray();
             })->toJson(),
         ]);
