@@ -44,6 +44,6 @@ class Debug
             return [($response ? 'Going' : 'Can\'t go') => trim($rsvpGroup->implode(', '), ',')];
         })->map(function ($rsvpList, $response) {
             return AttachmentField::create($response, $rsvpList)->displaySideBySide();
-        });
+        })->toArray();
     }
 }
