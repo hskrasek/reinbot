@@ -18,7 +18,7 @@ class Debug
                     ->setAuthorName($plan->user->username)
                     ->setTimestamp($plan->scheduled_at)
                     ->toArray();
-            })->toArray(),
+            })->toJson(),
         ]);
     }
 }
