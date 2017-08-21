@@ -46,7 +46,7 @@ class InteractionsController extends Controller
 
         /** @var \App\User $user */
         $user = $this->users->getBySlackId(array_get($payload, 'user.id'));
-        $plan = $this->plans->getById(explode('-', array_get($payload, 'callback_id'))[1]);
+        $plan = $this->plans->getById((int)explode('-', array_get($payload, 'callback_id'))[1]);
 
         if ($plan->hasStarted()) {
             return [
