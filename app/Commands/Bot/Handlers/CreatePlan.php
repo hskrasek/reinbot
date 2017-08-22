@@ -50,6 +50,7 @@ class CreatePlan
         }
 
         $plan = $this->plans->createPlan($user, $time, '');
+        $plan->save();
 
         /** @var \Symfony\Component\HttpFoundation\Response $response */
         $response         = $bot->sendRequest('chat.postMessage', [
@@ -82,6 +83,7 @@ class CreatePlan
 
         if (!$messageData['ok']) {
             $bot->reply("Couldn't create a plan due to: {$messageData['error']}");
+            $plan->delete();
 
             return;
         }
