@@ -28,9 +28,10 @@ class EventsController extends Controller
         $botMan->hears('<@U6JUKRTE0> debug', 'App\Commands\Bot\Handlers\Debug@handle');
         $botMan->hears('create_plan', function (BotMan $botMan) {
             $entities = $botMan->getMessage()->getExtras('entities');
-            $planTime = Carbon::parse($entities['datetime']['value']);
+            $botMan->reply('Received entities: ' . json_encode($entities));
+//            $planTime = Carbon::parse($entities['datetime']['value']);
 
-            $botMan->reply('You wanted to create a plan for ' . (string) $planTime);
+//            $botMan->reply('You wanted to create a plan for ' . (string) $planTime);
         })->middleware(Wit::create(env('WIT_AI_TOKEN')));
 
         $botMan->listen();
