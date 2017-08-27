@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Mpociot\BotMan\BotMan;
+use Mpociot\BotMan\Middleware\Wit;
 
 class EventsController extends Controller
 {
@@ -24,6 +26,12 @@ class EventsController extends Controller
             $botMan->reply('@reinbot get overwatch rank for Rev3rb');
         });
         $botMan->hears('<@U6JUKRTE0> debug', 'App\Commands\Bot\Handlers\Debug@handle');
+        $botMan->hears('create_plan', function (BotMan $botMan) {
+            $entities = $botMan->getMessage()->getExtras('entities');
+            $planTime = Carbon::parse($entities['datetime']['value']);
+
+            $botMan->reply('You wanted to create a plan for ' . (string) $planTime);
+        })->middleware(Wit::create(env('WIT_AI_TOKEN')));
 
         $botMan->listen();
 
