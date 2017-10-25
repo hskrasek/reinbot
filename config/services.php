@@ -41,6 +41,7 @@ return [
     ],
 
     'destiny' => [
-        'key' => env('DESTINY_API_KEY'),
+        'key'            => env('DESTINY_API_KEY'),
+        'slack_web_hook' => env('DESTINY_SLACK_WEBHOOK'),
     ],
 ];
