@@ -10,7 +10,7 @@ class ClanXPTransformer extends AbstractTransformer
         return [
             'title'     => array_get($milestone, 'availableQuests.0.displayProperties.name', ''),
             'text'      => array_get($milestone, 'about', ''),
-            'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon('https://www.bungie.net' . $thumbUrl),
+            'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
         ];
     }
