@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\Destiny\Client;
+use App\Services\Destiny\MilestoneTransformer;
 use Illuminate\Console\Command;
 
 class PostMilestones extends Command
@@ -46,19 +47,6 @@ class PostMilestones extends Command
     {
         $milestones = $this->client->getMilestones();
 
-        // dd($milestones->map(function (array $milestone) {
-        //     return array_merge($milestone, $this->client->getMilestoneContent($milestone['milestoneHash']));
-        // })->map(function (array $milestone) {
-        //     return $this->getQuestInformation($milestone);
-        // })->filter(function (array $milestone) {
-        //     return array_has($milestone, 'about');
-        // })->except(4253138191)->map(function (array $milestone) {
-        //     return [
-        //         'title' => array_get($milestone, 'availableQuests.0.displayProperties.name', ''),
-        //         'text'  => array_get($milestone, 'about', ''),
-        //     ];
-        // }));
-
         (new \GuzzleHttp\Client())->post(config('services.destiny.slack_web_hook'),
             [
                 'json' => [
@@ -70,15 +58,8 @@ class PostMilestones extends Command
                     })->filter(function (array $milestone) {
                         return array_has($milestone, 'about');
                     })->except(4253138191)->map(function (array $milestone) {
-                        $thumbUrl = array_get($milestone, 'availableQuests.0.displayProperties.icon', '');
-                        $imageUrl = array_get($milestone, 'availableQuests.0.pgcr_image', '');
-                        return [
-                            'title' => array_get($milestone, 'availableQuests.0.displayProperties.name', ''),
-                            'text'  => array_get($milestone, 'about', ''),
-                            'thumb_url' => empty($thumbUrl) ? $thumbUrl : 'https://www.bungie.net' . $thumbUrl,
-                            'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
-                        ];
-                    })->toArray(),
+                        return MilestoneTransformer::transform($milestone);
+                    })->filter()->toArray(),
                 ],
             ]);
     }
@@ -96,6 +77,13 @@ class PostMilestones extends Command
             if (array_has($availableQuest, 'activity')) {
                 $milestone['availableQuests'][$key]['activity'] = array_merge($availableQuest['activity'],
                     $this->client->getActivityDefinition($availableQuest['activity']['activityHash']));
+            }
+
+            if (array_has($availableQuest, 'challenges')) {
+                foreach ($availableQuest['challenges'] as $challengeKey => $challenge) {
+                    $milestone['availableQuests'][$key]['challenges'][$challengeKey] = array_merge($challenge,
+                        $this->client->getObjectiveDefinition($challenge['objectiveHash']));
+                }
             }
         }
 
