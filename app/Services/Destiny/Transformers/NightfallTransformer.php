@@ -1,6 +1,6 @@
 <?php namespace App\Services\Destiny\Transformers;
 
-class NightfallTransformer
+class NightfallTransformer extends AbstractTransformer
 {
     public function __invoke(array $milestone): array
     {
@@ -10,7 +10,7 @@ class NightfallTransformer
         return [
             'title'     => array_get($milestone, 'availableQuests.0.activity.displayProperties.name', ''),
             'text'      => array_get($milestone, 'availableQuests.0.activity.displayProperties.description', ''),
-            'thumb_url' => empty($thumbUrl) ? $thumbUrl : 'https://www.bungie.net' . $thumbUrl,
+            'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
             'fields'    => $this->buildChallengesArray($milestone),
         ];
@@ -21,7 +21,8 @@ class NightfallTransformer
         return collect(array_get($milestone, 'availableQuests.0.challenges'))->filter(function ($challenge) use (
             $milestone
         ) {
-            return array_get($challenge, 'activityHash') === array_get($milestone, 'availableQuests.0.activity.activityHash');
+            return array_get($challenge, 'activityHash') === array_get($milestone,
+                    'availableQuests.0.activity.activityHash');
         })->map(function (array $challenge) {
             return [
                 'title' => array_get($challenge, 'displayProperties.name', ''),

@@ -1,6 +1,6 @@
 <?php namespace App\Services\Destiny\Transformers;
 
-class LeviathanTransformer
+class LeviathanTransformer extends AbstractTransformer
 {
     public function __invoke(array $milestone): array
     {
@@ -10,7 +10,7 @@ class LeviathanTransformer
         return [
             'title'     => array_get($milestone, 'availableQuests.0.activity.displayProperties.name', ''),
             'text'      => array_get($milestone, 'about', ''),
-            'thumb_url' => empty($thumbUrl) ? $thumbUrl : 'https://www.bungie.net' . $thumbUrl,
+            'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon('https://www.bungie.net' . $thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
             'fields'    => $this->buildChallengesArray($milestone),
         ];

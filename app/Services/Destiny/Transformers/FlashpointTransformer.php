@@ -1,6 +1,6 @@
 <?php namespace App\Services\Destiny\Transformers;
 
-class FlashpointTransformer
+class FlashpointTransformer extends AbstractTransformer
 {
     public function __invoke(array $milestone): array
     {
@@ -9,8 +9,8 @@ class FlashpointTransformer
 
         return [
             'title'     => array_get($milestone, 'availableQuests.0.displayProperties.name', ''),
-            'text'    => array_get($milestone, 'about', ''),
-            'thumb_url' => empty($thumbUrl) ? $thumbUrl : 'https://www.bungie.net' . $thumbUrl,
+            'text'      => array_get($milestone, 'about', ''),
+            'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon('https://www.bungie.net' . $thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
             // 'color' => '#3C2121',
         ];
