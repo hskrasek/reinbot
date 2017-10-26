@@ -4,9 +4,7 @@ namespace App\Providers;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Psr\Http\Message\RequestInterface;
@@ -35,6 +33,15 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() === 'local') {
             $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
         }
+
+        $this->app->when(\App\Services\Destiny\Client::class)
+                  ->needs(Client::class)
+                  ->give(function () {
+                      return new Client([
+                          'base_uri' => 'https://www.bungie.net/Platform/Destiny2/',
+                          'headers'  => ['X-API-Key' => config('services.destiny.key')],
+                      ]);
+                  });
 
         $this->app->singleton(Client::class, function () {
             $stack = new HandlerStack(choose_handler());

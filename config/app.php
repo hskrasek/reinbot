@@ -171,6 +171,7 @@ return [
         Lisennk\Laravel\SlackWebApi\Providers\SlackApiServiceProvider::class,
         Spatie\SlashCommand\SlashCommandServiceProvider::class,
         Mpociot\BotMan\BotManServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,6 +234,7 @@ return [
         'SlackApi' => \Lisennk\Laravel\SlackWebApi\Facades\SlackApi::class,
         'BotMan' => Mpociot\BotMan\Facades\BotMan::class,
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];
