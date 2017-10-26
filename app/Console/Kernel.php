@@ -26,8 +26,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('destiny:milestones')
+                 ->weeklyOn(2, '10:00')
+                 ->timezone('America/Chicago')
+                 ->withoutOverlapping();
     }
 
     /**
