@@ -13,6 +13,7 @@ class LeviathanTransformer extends AbstractTransformer
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon('https://www.bungie.net' . $thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
             'fields'    => $this->buildChallengesArray($milestone),
+            'color'     => '#1C0B3C',
         ];
     }
 

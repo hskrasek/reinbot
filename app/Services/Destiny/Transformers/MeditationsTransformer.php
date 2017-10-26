@@ -12,6 +12,7 @@ class MeditationsTransformer
             'text'      => array_get($milestone, 'about', ''),
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : 'https://www.bungie.net' . $thumbUrl,
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
+            'color'     => '#F7324B',
         ];
     }
 }

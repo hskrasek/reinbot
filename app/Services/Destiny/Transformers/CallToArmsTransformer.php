@@ -12,7 +12,7 @@ class CallToArmsTransformer extends AbstractTransformer
             'text'      => array_get($milestone, 'about', ''),
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon('https://www.bungie.net' . $thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
-            'color'     => '#3C2121',
+            'color'     => '#6B0B10',
         ];
     }
 }

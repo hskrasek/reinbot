@@ -13,6 +13,7 @@ class NightfallTransformer extends AbstractTransformer
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
             'fields'    => $this->buildChallengesArray($milestone),
+            'color'     => '#526283',
         ];
     }
 
