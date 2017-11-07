@@ -1,6 +1,8 @@
 <?php namespace App\Services\Destiny;
 
 use App\Services\Destiny\Transformers\CallToArmsTransformer;
+use App\Services\Destiny\Transformers\ClanXPTransformer;
+use App\Services\Destiny\Transformers\FactionRallyTransformer;
 use App\Services\Destiny\Transformers\FlashpointTransformer;
 use App\Services\Destiny\Transformers\LeviathanTransformer;
 use App\Services\Destiny\Transformers\MeditationsTransformer;
@@ -33,7 +35,13 @@ class MilestoneTransformer
                 return (new MeditationsTransformer)($milestone);
             }
             case 3603098564: {
-                return [];
+                return (new ClanXPTransformer)($milestone);
+            }
+            case 1718587363: {
+                return (new FactionRallyTransformer)($milestone);
+            }
+            case 3205009061: {
+                return (new FactionRallyTransformer)($milestone);
             }
         }
 

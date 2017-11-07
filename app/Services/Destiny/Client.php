@@ -51,23 +51,28 @@ class Client
         return collect($this->get('Milestones/'));
     }
 
-    public function getMilestoneContent($milestoneHash)
+    public function getMilestoneContent($milestoneHash): array
     {
         return $this->get('Milestones/' . $milestoneHash . '/Content/');
     }
 
-    public function getItemDefinition($itemHash)
+    public function getItemDefinition($itemHash): array
     {
         return $this->get('Manifest/DestinyInventoryItemDefinition/' . $itemHash . '/');
     }
 
-    public function getActivityDefinition($activityHash)
+    public function getActivityDefinition($activityHash): array
     {
         return $this->get('Manifest/DestinyActivityDefinition/' . $activityHash . '/');
     }
 
-    public function getObjectiveDefinition($objectiveHash)
+    public function getObjectiveDefinition($objectiveHash): array
     {
         return $this->get('Manifest/DestinyObjectiveDefinition/' . $objectiveHash . '/');
+    }
+
+    public function getModifierDefinition($modifierHash): array
+    {
+        return $this->get('Manifest/DestinyActivityModifierDefinition/' . $modifierHash . '/');
     }
 }

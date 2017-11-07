@@ -5,7 +5,7 @@ class CallToArmsTransformer extends AbstractTransformer
     public function __invoke(array $milestone): array
     {
         $thumbUrl = array_get($milestone, 'availableQuests.0.displayProperties.icon', '');
-        $imageUrl = array_get($milestone, 'availableQuests.0.pgcr_image', '');
+        $imageUrl = array_get($milestone, 'availableQuests.0.activity.pgcrImage', '');
 
         return [
             'title'     => array_get($milestone, 'availableQuests.0.displayProperties.name', ''),

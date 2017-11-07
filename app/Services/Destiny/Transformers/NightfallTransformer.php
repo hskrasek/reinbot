@@ -5,14 +5,14 @@ class NightfallTransformer extends AbstractTransformer
     public function __invoke(array $milestone): array
     {
         $thumbUrl = array_get($milestone, 'availableQuests.0.displayProperties.icon', '');
-        $imageUrl = array_get($milestone, 'availableQuests.0.pgcr_image', '');
+        $imageUrl = array_get($milestone, 'availableQuests.0.activity.pgcrImage', '');
 
         return [
             'title'     => array_get($milestone, 'availableQuests.0.activity.displayProperties.name', ''),
             'text'      => array_get($milestone, 'availableQuests.0.activity.displayProperties.description', ''),
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
-            'fields'    => $this->buildChallengesArray($milestone),
+            'fields'    => $this->buildModifierArray($milestone),
             'color'     => '#526283',
         ];
     }
@@ -28,6 +28,19 @@ class NightfallTransformer extends AbstractTransformer
             return [
                 'title' => array_get($challenge, 'displayProperties.name', ''),
                 'value' => array_get($challenge, 'displayProperties.description', ''),
+                'short' => true,
+            ];
+        })->toArray();
+    }
+
+    private function buildModifierArray($milestone)
+    {
+        return collect(array_get($milestone, 'availableQuests.0.activity.activity_modifiers'))->map(function (
+            array $modifier
+        ) {
+            return [
+                'title' => array_get($modifier, 'displayProperties.name', ''),
+                'value' => array_get($modifier, 'displayProperties.description', ''),
                 'short' => true,
             ];
         })->toArray();
