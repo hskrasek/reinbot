@@ -4,6 +4,7 @@ use App\Services\Destiny\Transformers\CallToArmsTransformer;
 use App\Services\Destiny\Transformers\ClanXPTransformer;
 use App\Services\Destiny\Transformers\FactionRallyTransformer;
 use App\Services\Destiny\Transformers\FlashpointTransformer;
+use App\Services\Destiny\Transformers\IronBannerTransformer;
 use App\Services\Destiny\Transformers\LeviathanTransformer;
 use App\Services\Destiny\Transformers\MeditationsTransformer;
 use App\Services\Destiny\Transformers\NightfallTransformer;
@@ -42,6 +43,9 @@ class MilestoneTransformer
             }
             case 3205009061: {
                 return (new FactionRallyTransformer)($milestone);
+            }
+            case 4248276869: {
+                return (new IronBannerTransformer)($milestone);
             }
         }
 
