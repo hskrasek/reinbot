@@ -3,6 +3,7 @@
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Support\Str;
 use Psr\Log\LoggerInterface;
+use function GuzzleHttp\Psr7\stream_for;
 
 class Client
 {
@@ -32,7 +33,7 @@ class Client
     {
         $response = $this->client->get(Str::endsWith($endpoint, '/') ? $endpoint : $endpoint . '/');
 
-        $response = json_decode((string) $response->getBody(), true);
+        $response = json_decode((string)$response->getBody(), true);
 
         if (array_get($response, 'ErrorCode') !== 1) {
             $this->log->error('destiny.api.error', [
@@ -44,6 +45,28 @@ class Client
         }
 
         return array_get($response, 'Response', []);
+    }
+
+    public function getManifest(): array
+    {
+        return $this->get('Manifest/');
+    }
+
+    public function downloadManifest(string $manifestPath)
+    {
+        $this->client->get(
+            $manifestPath,
+            ['sink' => stream_for(fopen($tempManifest = storage_path('app/manifest/temp_manifest.content'), 'w'))]
+        );
+        $manifest = new \ZipArchive;
+        $manifest->open($tempManifest);
+        $manifest->extractTo(storage_path('app/uncompressed_manifest'));
+        $manifest->close();
+
+        // Cleanup temp manifest
+        unlink(\Storage::path(last(\Storage::allFiles('manifest'))));
+
+        \Storage::move(head(\Storage::allFiles('uncompressed_manifest')), 'manifest.sqlite');
     }
 
     public function getMilestones()
