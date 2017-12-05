@@ -29,7 +29,7 @@ class Rsvp extends Model
     ];
 
     protected $casts = [
-        'response' => 'boolean'
+        'response' => 'boolean',
     ];
 
     public function user()

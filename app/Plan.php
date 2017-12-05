@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Plan
  *
- * @property int                                                       $id
- * @property int                                                       $user_id
- * @property \Carbon\Carbon                                            $scheduled_at
- * @property string                                                    $response_url
- * @property string                                                    $message_ts
- * @property \Carbon\Carbon|null                                       $created_at
- * @property \Carbon\Carbon|null                                       $updated_at
+ * @property int $id
+ * @property int $user_id
+ * @property \Carbon\Carbon $scheduled_at
+ * @property string $response_url
+ * @property string $message_ts
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Rsvp[] $rsvps
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereId($value)
@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\User $user
  */
 class Plan extends Model
 {
