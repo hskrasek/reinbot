@@ -33,9 +33,9 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
+        'destiny_manifest' => [
             'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'database' => storage_path('app/manifest.sqlite'),
             'prefix' => '',
         ],
 
