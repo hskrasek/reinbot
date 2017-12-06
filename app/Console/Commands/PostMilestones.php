@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Milestone;
 use App\Services\Destiny\Client;
 use App\Services\Destiny\MilestoneTransformer;
 use Illuminate\Console\Command;
@@ -13,7 +14,7 @@ class PostMilestones extends Command
      *
      * @var string
      */
-    protected $signature = 'destiny:milestones';
+    protected $signature = 'destiny:milestones {--debug : Dump the attachments instead of sending to Slack}';
 
     /**
      * The console command description.
@@ -47,18 +48,34 @@ class PostMilestones extends Command
     {
         $milestones = $this->client->getMilestones();
 
+        $attachments = $milestones->map(function (array $milestone) {
+            // Hook into manifest here to get missing Milestone information
+            $apiMilestone = $this->client->getMilestoneContent($milestone['milestoneHash']);
+
+            if (!empty($apiMilestone)) {
+                return array_merge($milestone, $apiMilestone);
+            }
+
+            $manifestMilestone = Milestone::byBungieId($milestone['milestoneHash'])->first();
+
+            return array_merge($milestone, $manifestMilestone->json);
+        })->map(function (array $milestone) {
+            return $this->getQuestInformation($milestone);
+        })->except(4253138191)->map(function (array $milestone) {
+            return MilestoneTransformer::transform($milestone);
+        });
+
+        if ($this->option('debug')) {
+            $this->line('Dumping attachments');
+            dd($attachments->toArray());
+        }
+
         (new \GuzzleHttp\Client())->post(
             config('services.destiny.slack_web_hook'),
             [
                 'json' => [
                     'text'        => 'Incoming transmission!',
-                    'attachments' => $milestones->map(function (array $milestone) {
-                        return array_merge($milestone, $this->client->getMilestoneContent($milestone['milestoneHash']));
-                    })->map(function (array $milestone) {
-                        return $this->getQuestInformation($milestone);
-                    })->except(4253138191)->map(function (array $milestone) {
-                        return MilestoneTransformer::transform($milestone);
-                    })->filter()->toArray(),
+                    'attachments' => $attachments->filter()->toArray(),
                 ],
             ]
         );
