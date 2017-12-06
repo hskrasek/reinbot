@@ -4,6 +4,7 @@ use App\Services\Destiny\Transformers\CallToArmsTransformer;
 use App\Services\Destiny\Transformers\ClanXPTransformer;
 use App\Services\Destiny\Transformers\FactionRallyTransformer;
 use App\Services\Destiny\Transformers\FlashpointTransformer;
+use App\Services\Destiny\Transformers\HeroicStrikesTransformer;
 use App\Services\Destiny\Transformers\IronBannerTransformer;
 use App\Services\Destiny\Transformers\LeviathanTransformer;
 use App\Services\Destiny\Transformers\MeditationsTransformer;
@@ -18,6 +19,7 @@ class MilestoneTransformer
      */
     public static function transform(array $milestone)
     {
+        //TODO: Match descriptions within the companion app if possible
         switch ($milestone['milestoneHash']) {
             case 2171429505: {
                 return (new NightfallTransformer)($milestone);
@@ -46,6 +48,9 @@ class MilestoneTransformer
             }
             case 4248276869: {
                 return (new IronBannerTransformer)($milestone);
+            }
+            case 3405519164: {
+                return (new HeroicStrikesTransformer)($milestone);
             }
         }
 
