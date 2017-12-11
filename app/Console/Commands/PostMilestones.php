@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Milestone;
+use App\MilestoneRepository;
 use App\Services\Destiny\Client;
 use App\Services\Destiny\MilestoneTransformer;
 use Illuminate\Console\Command;
@@ -29,14 +30,20 @@ class PostMilestones extends Command
     private $client;
 
     /**
+     * @var MilestoneRepository
+     */
+    private $milestones;
+
+    /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client, MilestoneRepository $milestones)
     {
         parent::__construct();
-        $this->client = $client;
+        $this->client     = $client;
+        $this->milestones = $milestones;
     }
 
     /**
@@ -49,19 +56,8 @@ class PostMilestones extends Command
         $milestones = $this->client->getMilestones();
 
         $attachments = $milestones->map(function (array $milestone) {
-            // Hook into manifest here to get missing Milestone information
-            $apiMilestone = $this->client->getMilestoneContent($milestone['milestoneHash']);
-
-            if (!empty($apiMilestone)) {
-                return array_merge($milestone, $apiMilestone);
-            }
-
-            $manifestMilestone = Milestone::byBungieId($milestone['milestoneHash'])->first();
-
-            return array_merge($milestone, $manifestMilestone->json);
-        })->map(function (array $milestone) {
-            return $this->getQuestInformation($milestone);
-        })->except(4253138191)->map(function (array $milestone) {
+            return $this->milestones->getMilestoneFromManifest($milestone);
+        })->except(4253138191)->map(function (Milestone $milestone) {
             return MilestoneTransformer::transform($milestone);
         });
 
