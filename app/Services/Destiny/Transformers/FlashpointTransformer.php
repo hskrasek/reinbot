@@ -1,16 +1,27 @@
-<?php namespace App\Services\Destiny\Transformers;
+<?php declare(strict_types=1);
+
+namespace App\Services\Destiny\Transformers;
+
+use App\Milestone;
+use App\Quest;
 
 class FlashpointTransformer extends AbstractTransformer
 {
-    public function __invoke(array $milestone): array
+    public function __invoke(Milestone $milestone): array
     {
-        $thumbUrl = array_get($milestone, 'availableQuests.0.displayProperties.icon', '');
+        /** @var Quest $quest */
+        $quest = $milestone->quests->first();
+        $thumbUrl = data_get($quest, 'json.displayProperties.icon', '');
 
         return [
-            'title'     => array_get($milestone, 'availableQuests.0.displayProperties.name', ''),
-            'text'      => array_get($milestone, 'about', ''),
+            'title'     => data_get($quest, 'json.displayProperties.name', ''),
+            'text'      => data_get(
+                $milestone,
+                'json.quests.' . sprintf('%u', $quest->id & 0xFFFFFFFF) . '.displayProperties.description',
+                ''
+            ),
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
-            'color' => '#208D90',
+            'color'     => '#208D90',
         ];
     }
 }

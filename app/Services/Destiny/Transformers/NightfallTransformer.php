@@ -1,30 +1,46 @@
 <?php namespace App\Services\Destiny\Transformers;
 
+use App\Activity;
+use App\Milestone;
+use App\Modifier;
+use App\Quest;
+
 class NightfallTransformer extends AbstractTransformer
 {
-    public function __invoke(array $milestone): array
+    public function __invoke(Milestone $milestone): array
     {
-        $thumbUrl = array_get($milestone, 'availableQuests.0.displayProperties.icon', '');
-        $imageUrl = array_get($milestone, 'availableQuests.0.activity.pgcrImage', '');
+        /** @var Quest $quest */
+        $quest = $milestone->quests->first();
+        /** @var Activity $activity */
+        $activity = $quest->activity;
+
+        $thumbUrl = data_get($quest, 'json.displayProperties.icon', '');
+        $imageUrl = data_get($activity, 'json.pgcrImage', '');
 
         return [
-            'title'     => array_get($milestone, 'availableQuests.0.activity.displayProperties.name', ''),
-            'text'      => array_get($milestone, 'availableQuests.0.activity.displayProperties.description', ''),
+            'title'     => data_get(
+                $activity,
+                'json.displayProperties.name',
+                data_get($milestone, 'json.displayProperties.name')
+            ),
+            'text'      => data_get(
+                $activity,
+                'json.displayProperties.description',
+                data_get($milestone, 'json.displayProperties.description')
+            ),
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
-            'fields'    => $this->buildModifierArray($milestone),
+            'fields'    => $this->buildModifierArray($activity),
             'color'     => '#526283',
         ];
     }
 
-    private function buildModifierArray($milestone)
+    private function buildModifierArray(Activity $activity)
     {
-        return collect(array_get($milestone, 'availableQuests.0.activity.activity_modifiers'))->map(function (
-            array $modifier
-        ) {
+        return $activity->modifiers->map(function (Modifier $modifier) {
             return [
-                'title' => array_get($modifier, 'displayProperties.name', ''),
-                'value' => array_get($modifier, 'displayProperties.description', ''),
+                'title' => data_get($modifier, 'json.displayProperties.name', ''),
+                'value' => data_get($modifier, 'json.displayProperties.description', ''),
                 'short' => true,
             ];
         })->toArray();

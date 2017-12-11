@@ -1,14 +1,33 @@
-<?php namespace App\Services\Destiny\Transformers;
+<?php declare(strict_types=1);
+
+namespace App\Services\Destiny\Transformers;
+
+use App\Activity;
+use App\Milestone;
+use App\Quest;
 
 class IronBannerTransformer extends AbstractTransformer
 {
-    public function __invoke(array $milestone): array
+    public function __invoke(Milestone $milestone): array
     {
-        $thumbUrl = array_get($milestone, 'availableQuests.0.displayProperties.icon', '');
+        /** @var Quest $quest */
+        $quest = $milestone->quests->first();
+        /** @var Activity $activity */
+        $activity = $quest->activity;
+
+        $thumbUrl = data_get($quest, 'json.displayProperties.icon', '');
 
         return [
-            'title'     => array_get($milestone, 'availableQuests.0.activity.displayProperties.name', ''),
-            'text'      => array_get($milestone, 'availableQuests.0.activity.displayProperties.description', ''),
+            'title'     => data_get(
+                $activity,
+                'json.displayProperties.name',
+                data_get($milestone, 'json.displayProperties.name')
+            ),
+            'text'      => data_get(
+                $activity,
+                'json.displayProperties.description',
+                data_get($milestone, 'json.displayProperties.description')
+            ),
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
             'color'     => '#160A09',
         ];
