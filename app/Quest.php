@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property array $json
+ * @property Activity $activity
+ * @property \Illuminate\Support\Collection|Challenge[] $challenges
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest byBungieId($id)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest whereBungieIdIn($ids)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest whereId($value)

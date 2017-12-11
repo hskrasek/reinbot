@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property array $json
+ * @property \Illuminate\Support\Collection|Quest[] $quests
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Milestone byBungieId($id)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Milestone whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Milestone whereJson($value)
