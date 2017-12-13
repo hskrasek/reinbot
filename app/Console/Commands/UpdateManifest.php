@@ -64,8 +64,7 @@ class UpdateManifest extends Command
         $this->info('Downloading new manifest. Version: ' . $newManifest['version']);
 
         $this->client->downloadManifest(
-            array_get($newManifest, 'mobileWorldContentPaths.en'),
-            database_path('manifest.sqlite')
+            array_get($newManifest, 'mobileWorldContentPaths.en')
         );
 
         Manifest::create(['version' => $newManifest['version']]);

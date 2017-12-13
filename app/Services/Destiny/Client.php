@@ -66,6 +66,7 @@ class Client
         // Cleanup temp manifest
         unlink(\Storage::path(last(\Storage::allFiles('manifest'))));
 
+        \Storage::delete('manifest.sqlite');
         \Storage::move(head(\Storage::allFiles('uncompressed_manifest')), 'manifest.sqlite');
     }
 
