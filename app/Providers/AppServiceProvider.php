@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Token;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
@@ -35,13 +36,18 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->when(\App\Services\Destiny\Client::class)
-                  ->needs(Client::class)
-                  ->give(function () {
-                      return new Client([
-                          'base_uri' => 'https://www.bungie.net/Platform/Destiny2/',
-                          'headers'  => ['X-API-Key' => config('services.destiny.key')],
-                      ]);
-                  });
+            ->needs(Client::class)
+            ->give(function () {
+                $token = Token::latest()->first();
+
+                return new Client([
+                    'base_uri' => 'https://www.bungie.net/Platform/Destiny2/',
+                    'headers'  => [
+                        'X-API-Key'     => config('services.destiny.key'),
+                        'Authorization' => "{$token->type} {$token->access_token}",
+                    ],
+                ]);
+            });
 
         $this->app->singleton(Client::class, function () {
             $stack = new HandlerStack(choose_handler());
@@ -55,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
                     return $promise->then(
                         function (ResponseInterface $response) use ($request) {
                             if (str_contains(head($response->getHeader('Content-Type')), 'json')) {
-                                $data = \GuzzleHttp\json_decode((string) $response->getBody(), true);
+                                $data = \GuzzleHttp\json_decode((string)$response->getBody(), true);
 
                                 if (!$data['ok']) {
                                     throw new RequestException($data['error'], $request, $response);
