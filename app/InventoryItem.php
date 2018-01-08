@@ -5,16 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Quest
+ * App\InventoryItem
  *
  * @property int $id
  * @property array $json
- * @property \App\InventoryItem $cost
- * @property int $cost_amount
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest byBungieId($id)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest whereBungieIdIn($ids)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest whereJson($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem byBungieId($id)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem whereBungieIdIn($ids)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem whereJson($value)
  * @mixin \Eloquent
  */
 class InventoryItem extends Model
