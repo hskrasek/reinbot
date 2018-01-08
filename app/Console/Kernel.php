@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\PostMilestones;
+use App\Console\Commands\RefreshTokens;
 use App\Console\Commands\UpdateManifest;
 use App\Console\Commands\XurInventory;
 use Illuminate\Console\Scheduling\Schedule;
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         PostMilestones::class,
         UpdateManifest::class,
         XurInventory::class,
+        RefreshTokens::class,
     ];
 
     /**
@@ -37,6 +39,16 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('destiny:manifest')
             ->hourly()
+            ->timezone('America/Chicago')
+            ->withoutOverlapping();
+
+        $schedule->command('destiny:xur')
+            ->weeklyOn(5, '11:05')
+            ->timezone('America/Chicago')
+            ->withoutOverlapping();
+
+        $schedule->command('destiny:refresh-tokens')
+            ->weeklyOn(5, '10:50')
             ->timezone('America/Chicago')
             ->withoutOverlapping();
     }

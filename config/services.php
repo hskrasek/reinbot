@@ -41,6 +41,8 @@ return [
     ],
 
     'destiny' => [
+        'client_id'          => env('DESTINY_CLIENT_ID'),
+        'client_secret'      => env('DESTINY_CLIENT_SECRET'),
         'key'                => env('DESTINY_API_KEY'),
         'slack_web_hook'     => env('DESTINY_SLACK_WEBHOOK'),
         'xur_slack_web_hook' => env('DESTINY_XUR_SLACK_WEBHOOK'),
