@@ -76,42 +76,4 @@ class PostMilestones extends Command
             ]
         );
     }
-
-    private function getQuestInformation(array $milestone)
-    {
-        if (!array_has($milestone, 'availableQuests')) {
-            return $milestone;
-        }
-
-        foreach ($milestone['availableQuests'] as $key => $availableQuest) {
-            $milestone['availableQuests'][$key] = array_merge(
-                $availableQuest,
-                $this->client->getItemDefinition($availableQuest['questItemHash'])
-            );
-
-            if (array_has($availableQuest, 'activity')) {
-                $milestone['availableQuests'][$key]['activity'] = array_merge(
-                    $availableQuest['activity'],
-                    $this->client->getActivityDefinition($availableQuest['activity']['activityHash'])
-                );
-
-                if (array_has($availableQuest, 'activity.modifierHashes')) {
-                    foreach ($milestone['availableQuests'][$key]['activity']['modifierHashes'] as $modifierKey => $modifierHash) {
-                        $milestone['availableQuests'][$key]['activity']['activity_modifiers'][] = $this->client->getModifierDefinition($modifierHash);
-                    }
-                }
-            }
-
-            if (array_has($availableQuest, 'challenges')) {
-                foreach ($availableQuest['challenges'] as $challengeKey => $challenge) {
-                    $milestone['availableQuests'][$key]['challenges'][$challengeKey] = array_merge(
-                        $challenge,
-                        $this->client->getObjectiveDefinition($challenge['objectiveHash'])
-                    );
-                }
-            }
-        }
-
-        return $milestone;
-    }
 }
