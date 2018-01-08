@@ -52,6 +52,28 @@ class Client
         return $this->get('Manifest/');
     }
 
+    public function getXurInventory(): array
+    {
+        $response = $this->client->get('TigerXbox/Profile/4611686018429963408/Character/2305843009260880385/Vendors/2190858386/', [
+            'query' => [
+                'components' => 402
+            ],
+        ]);
+
+        $response = json_decode((string)$response->getBody(), true);
+
+        if (array_get($response, 'ErrorCode') !== 1) {
+            $this->log->error('destiny.api.error', [
+                'message' => array_get($response, 'Message'),
+                'status'  => array_get($response, 'ErrorStatus'),
+            ]);
+
+            throw new \Exception('There was an error calling the Destiny 2 API.');
+        }
+
+        return array_get($response, 'Response.sales.data', []);
+    }
+
     public function downloadManifest(string $manifestPath)
     {
         $this->client->get(

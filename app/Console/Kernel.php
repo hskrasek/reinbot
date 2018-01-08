@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\PostMilestones;
 use App\Console\Commands\UpdateManifest;
+use App\Console\Commands\XurInventory;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         PostMilestones::class,
         UpdateManifest::class,
+        XurInventory::class,
     ];
 
     /**

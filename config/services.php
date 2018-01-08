@@ -41,7 +41,19 @@ return [
     ],
 
     'destiny' => [
-        'key'            => env('DESTINY_API_KEY'),
-        'slack_web_hook' => env('DESTINY_SLACK_WEBHOOK'),
+        'key'                => env('DESTINY_API_KEY'),
+        'slack_web_hook'     => env('DESTINY_SLACK_WEBHOOK'),
+        'xur_slack_web_hook' => env('DESTINY_XUR_SLACK_WEBHOOK'),
+        'xur_messages'       => [
+            'My movements are not predictable, even to me...',
+            'Do not be alarmed, I know no reason to cause you harm.',
+            'My actions are not my own...',
+            'It is my fate to help you. This, I know.',
+            'I come bearing help.',
+            'I think you have terrible need of my gifts...',
+            'The Nine show you these...',
+            'I bring gifts of the Nine...Gifts, you sorely need...',
+            'These are from the Nine..',
+        ],
     ],
 ];
