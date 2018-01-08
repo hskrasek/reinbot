@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Token;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
@@ -38,13 +37,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(\App\Services\Destiny\Client::class)
             ->needs(Client::class)
             ->give(function () {
-                $token = Token::latest()->first();
-
                 return new Client([
                     'base_uri' => 'https://www.bungie.net/Platform/Destiny2/',
                     'headers'  => [
-                        'X-API-Key'     => config('services.destiny.key'),
-                        'Authorization' => "{$token->type} {$token->access_token}",
+                        'X-API-Key' => config('services.destiny.key'),
                     ],
                 ]);
             });

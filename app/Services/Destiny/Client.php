@@ -1,5 +1,6 @@
 <?php namespace App\Services\Destiny;
 
+use App\Token;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Support\Str;
 use Psr\Log\LoggerInterface;
@@ -54,9 +55,13 @@ class Client
 
     public function getXurInventory(): array
     {
+        $token = Token::latest()->first();
         $response = $this->client->get('TigerXbox/Profile/4611686018429963408/Character/2305843009260880385/Vendors/2190858386/', [
             'query' => [
                 'components' => 402
+            ],
+            'headers' => [
+                'Authorization' => "{$token->type} {$token->access_token}",
             ],
         ]);
 
