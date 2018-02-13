@@ -3,6 +3,7 @@
 use App\Milestone;
 use App\Services\Destiny\Transformers\CallToArmsTransformer;
 use App\Services\Destiny\Transformers\ClanXPTransformer;
+use App\Services\Destiny\Transformers\CrimsonDaysTransformer;
 use App\Services\Destiny\Transformers\FactionRallyTransformer;
 use App\Services\Destiny\Transformers\FlashpointTransformer;
 use App\Services\Destiny\Transformers\HeroicStrikesTransformer;
@@ -43,6 +44,8 @@ class MilestoneTransformer
                 return (new IronBannerTransformer)($milestone);
             case 3405519164:
                 return (new HeroicStrikesTransformer)($milestone);
+            case 120184767:
+                return (new CrimsonDaysTransformer)($milestone);
         }
 
         return [];
