@@ -17,7 +17,9 @@ class Xur
 
     public function getInventory(): array
     {
-        return collect($this->client->getXurInventory())->map(function ($item) {
+        return collect($this->client->getXurInventory())->filter(function ($item) {
+            return !empty($item['costs']);
+        })->map(function ($item) {
             return tap(InventoryItem::byBungieId($item['itemHash'])->first(),
                 function (InventoryItem $inventoryItem) use ($item) {
                     $inventoryItem->cost        = InventoryItem::byBungieId($item['costs'][0]['itemHash'])->first();
