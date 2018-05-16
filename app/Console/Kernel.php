@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('destiny:milestones')
-            ->weeklyOn(2, '11:30')
+            ->weeklyOn(2, '12:30')
             ->timezone('America/Chicago')
             ->withoutOverlapping();
 
@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping();
 
         $schedule->command('destiny:xur')
-            ->weeklyOn(5, '11:05')
+            ->weeklyOn(5, '12:05')
             ->timezone('America/Chicago')
             ->withoutOverlapping();
 
