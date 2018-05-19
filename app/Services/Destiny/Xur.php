@@ -20,11 +20,13 @@ class Xur
         return collect($this->client->getXurInventory())->filter(function ($item) {
             return !empty($item['costs']);
         })->map(function ($item) {
-            return tap(InventoryItem::byBungieId($item['itemHash'])->first(),
+            return tap(
+                InventoryItem::byBungieId($item['itemHash'])->first(),
                 function (InventoryItem $inventoryItem) use ($item) {
                     $inventoryItem->cost        = InventoryItem::byBungieId($item['costs'][0]['itemHash'])->first();
                     $inventoryItem->cost_amount = $item['costs'][0]['quantity'];
-                });
+                }
+            );
         })->transform(function (InventoryItem $item) {
             return $this->transformItemIntoSlackAttachment($item);
         })->toArray();
@@ -39,8 +41,11 @@ class Xur
             'fields'    => [
                 [
                     'title' => 'Cost',
-                    'value' => Str::lower($item->cost_amount . ' ' . data_get($item->cost,
-                            'json.displayProperties.name', '')),
+                    'value' => Str::lower($item->cost_amount . ' ' . data_get(
+                        $item->cost,
+                        'json.displayProperties.name',
+                        ''
+                    )),
                 ],
             ],
             'color'     => $this->getColor(data_get($item, 'json.itemType'), data_get($item, 'json.classType')),

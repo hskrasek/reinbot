@@ -38,7 +38,6 @@ class RsvpToPlan extends SignatureHandler
         if (!$plan = app(PlanRepository::class)->getNextPlan()) {
             return $this->respondToSlack(__('messages.errors.plans.no_plan'))
                         ->displayResponseToUserWhoTypedCommand();
-
         }
 
         $user = app(UserRepository::class)->getBySlackId($request->userId);
