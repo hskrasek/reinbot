@@ -2,7 +2,7 @@
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use Mpociot\BotMan\BotMan;
+use BotMan\BotMan\BotMan;
 use Spatie\SlashCommand\Attachment;
 use Spatie\SlashCommand\AttachmentField;
 
