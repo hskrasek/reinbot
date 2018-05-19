@@ -30,10 +30,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment() === 'local') {
-            $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
-        }
-
         $this->app->when(\App\Services\Destiny\Client::class)
             ->needs(Client::class)
             ->give(function () {
@@ -69,9 +65,8 @@ class AppServiceProvider extends ServiceProvider
                     );
                 };
             });
-            $client = new Client(['handler' => $stack]);
 
-            return $client;
+            return new Client(['handler' => $stack]);
         });
 
         $this->app->alias('bugsnag.logger', \Illuminate\Contracts\Logging\Log::class);
