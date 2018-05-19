@@ -169,7 +169,6 @@ return [
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         Lisennk\Laravel\SlackWebApi\Providers\SlackApiServiceProvider::class,
         Spatie\SlashCommand\SlashCommandServiceProvider::class,
-        Mpociot\BotMan\BotManServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
         /*

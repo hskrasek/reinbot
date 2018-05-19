@@ -3,7 +3,7 @@
 use App\Plan;
 use App\Rsvp;
 use Illuminate\Support\Collection;
-use Mpociot\BotMan\BotMan;
+use BotMan\BotMan\BotMan;
 use Spatie\SlashCommand\Attachment;
 use Spatie\SlashCommand\AttachmentField;
 

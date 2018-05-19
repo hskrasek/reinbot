@@ -1,7 +1,7 @@
 <?php namespace App\Commands\Bot\Handlers;
 
 use App\User;
-use Mpociot\BotMan\BotMan;
+use BotMan\BotMan\BotMan;
 
 class Bitch
 {

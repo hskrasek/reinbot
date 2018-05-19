@@ -4,7 +4,7 @@ use App\PlanRepository;
 use App\User;
 use App\UserRepository;
 use Carbon\Carbon;
-use Mpociot\BotMan\BotMan;
+use BotMan\BotMan\BotMan;
 use Spatie\SlashCommand\Attachment;
 use Spatie\SlashCommand\AttachmentAction as Action;
 
