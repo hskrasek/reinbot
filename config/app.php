@@ -167,7 +167,6 @@ return [
          * Package Service Providers...
          */
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
-        Laravel\Tinker\TinkerServiceProvider::class,
         Lisennk\Laravel\SlackWebApi\Providers\SlackApiServiceProvider::class,
         Spatie\SlashCommand\SlashCommandServiceProvider::class,
         Mpociot\BotMan\BotManServiceProvider::class,
