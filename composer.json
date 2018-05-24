@@ -15,6 +15,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.4",
         "intervention/imagecache": "^2.3",
+        "laravel-frontend-presets/tailwindcss": "^0.6.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0",
         "lisennk/laravel-slack-web-api": "^0.1.1",
