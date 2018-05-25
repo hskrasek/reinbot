@@ -25,6 +25,10 @@ class InventoryItem extends Model
         'json' => 'json',
     ];
 
+    protected $fillable = [
+        '*'
+    ];
+
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $id
