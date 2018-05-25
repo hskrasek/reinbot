@@ -20,3 +20,11 @@ Route::any('events', [
     'as'   => 'events',
     'uses' => 'EventsController',
 ]);
+
+Route::get('items', function () {
+    return \App\InventoryItem::limit(25)->get()->toArray();
+});
+
+Route::get('items/{id}', [
+    'uses' => 'ApiController@getItem',
+]);

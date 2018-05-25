@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/destiny2/{any}', [
+    'uses' => 'SpaController',
+])->where('any', '.*');
