@@ -42,7 +42,7 @@ class PostMilestones extends Command
     public function __construct(Client $client, MilestoneRepository $milestones)
     {
         parent::__construct();
-        $this->client     = $client;
+        $this->client = $client;
         $this->milestones = $milestones;
     }
 

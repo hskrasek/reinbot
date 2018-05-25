@@ -6,6 +6,7 @@ use App\Console\Commands\PostMilestones;
 use App\Console\Commands\RefreshTokens;
 use App\Console\Commands\UpdateManifest;
 use App\Console\Commands\XurInventory;
+use Bugsnag\BugsnagLaravel\Commands\DeployCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -21,6 +22,7 @@ class Kernel extends ConsoleKernel
         UpdateManifest::class,
         XurInventory::class,
         RefreshTokens::class,
+        DeployCommand::class,
     ];
 
     /**
@@ -37,8 +39,8 @@ class Kernel extends ConsoleKernel
             ->timezone('America/Chicago')
             ->withoutOverlapping();
 
-        $schedule->command('destiny:manifest')
-            ->hourly()
+        $schedule->command('destiny:manifest', ['--force'])
+            ->everyThirtyMinutes()
             ->timezone('America/Chicago')
             ->withoutOverlapping();
 
@@ -60,7 +62,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
         require base_path('routes/console.php');
     }
 }
