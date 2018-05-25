@@ -3,7 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Services\Destiny\Xur;
+use Bugsnag\Client as Bugsnag;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class XurInventory extends Command
 {
@@ -24,16 +27,22 @@ class XurInventory extends Command
      * @var Xur
      */
     private $xur;
+    /**
+     * @var Bugsnag
+     */
+    private $bugsnag;
 
     /**
      * Create a new command instance.
      *
      * @param Xur $xur
+     * @param Bugsnag $bugsnag
      */
-    public function __construct(Xur $xur)
+    public function __construct(Xur $xur, Bugsnag $bugsnag)
     {
         parent::__construct();
         $this->xur = $xur;
+        $this->bugsnag = $bugsnag;
     }
 
     /**
@@ -43,7 +52,23 @@ class XurInventory extends Command
      */
     public function handle()
     {
-        $inventory = $this->xur->getInventory();
+        $times = 5;
+        beginning:
+        try {
+            $inventory = $this->xur->getInventory();
+        } catch (ClientException $exception) {
+            if (!$times) {
+                $this->bugsnag->leaveBreadcrumb(
+                    'Failed to refresh tokens before getting Xur inventory',
+                    \Bugsnag\Breadcrumbs\Breadcrumb::ERROR_TYPE
+                );
+                throw $exception;
+            }
+
+            $times--;
+            Artisan::call('destiny:refresh-tokens');
+            goto beginning;
+        }
 
         if ($this->option('debug')) {
             $this->line('Dumping attachments');
