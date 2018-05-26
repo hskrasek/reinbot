@@ -15,8 +15,18 @@ class InventoryItemResource extends JsonResource
      */
     public function toArray($request)
     {
-        return array_merge([
-            'id' => $this->id,
-        ], array_only($this->json, ['displayProperties', 'screenshot']));
+        return [
+            'id'          => data_get($this->json, 'hash'),
+            'name'        => data_get($this->json, 'displayProperties.name'),
+            'description' => data_get($this->json, 'displayProperties.description'),
+            'icon'        => data_get($this->json, 'displayProperties.icon'),
+            'screenshot'  => data_get($this->json, 'screenshot'),
+            'class'       => $this->when(null !== $this->class, function () {
+                return data_get($this->class->json, 'displayProperties.name');
+            }),
+            'lore'        => LoreResource::make($this->lore),
+            'stats'       => StatResource::collection($this->stats),
+            'json'        => $this->when($request->has('debug'), $this->json),
+        ];
     }
 }
