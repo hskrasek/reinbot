@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property array $json
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier byBungieId($id)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier whereBungieIdIn($ids)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier whereJson($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier whereBungieIdIn($ids)
  */
 class Modifier extends Model
 {

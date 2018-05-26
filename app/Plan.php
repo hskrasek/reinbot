@@ -9,21 +9,21 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $user_id
- * @property \Carbon\Carbon $scheduled_at
- * @property string $response_url
- * @property string $message_ts
+ * @property string|null $response_url
+ * @property string|null $message_ts
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $scheduled_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Rsvp[] $rsvps
+ * @property-read \App\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereResponseUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereMessageTs($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereResponseUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereScheduledAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereUserId($value)
  * @mixin \Eloquent
- * @property-read \App\User $user
  */
 class Plan extends Model
 {

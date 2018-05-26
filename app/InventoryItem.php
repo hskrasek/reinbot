@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property array $json
+ * @property CharacterClass $class
+ * @property Lore $lore
+ * @property \Illuminate\Support\Collection|Stat[] $stats
  * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem byBungieId($id)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem whereBungieIdIn($ids)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem whereId($value)
@@ -26,7 +29,7 @@ class InventoryItem extends Model
     ];
 
     protected $fillable = [
-        '*'
+        '*',
     ];
 
     /**

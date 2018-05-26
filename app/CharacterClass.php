@@ -5,7 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class ClassType extends Model
+/**
+ * App\CharacterClass
+ *
+ * @property int $id
+ * @property array $json
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CharacterClass whereClass($classType)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CharacterClass whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CharacterClass whereJson($value)
+ * @mixin \Eloquent
+ */
+class CharacterClass extends Model
 {
     protected $table = 'DestinyClassDefinition';
 
@@ -15,7 +25,7 @@ class ClassType extends Model
         'json' => 'json',
     ];
 
-    public function scopeWhereClassType(Builder $builder, int $classType)
+    public function scopeWhereClass(Builder $builder, int $classType)
     {
         return $builder->whereRaw("json_extract(json, '$.classType') = ?", [$classType]);
     }
