@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\InventoryItemResource;
-use App\InventoryItem;
+use App\Repositories\ItemsRepository;
 
 class ApiController extends Controller
 {
-    public function getItem(int $itemId)
+    public function getItem(int $itemId, ItemsRepository $items)
     {
         return InventoryItemResource::make(
-            InventoryItem::byBungieId($itemId)->first()
+            $items->getItemByHash($itemId)
         );
     }
 }
