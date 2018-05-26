@@ -19,7 +19,7 @@ class ItemsRepository
             })->first();
             $item->lore = Lore::byBungieId(data_get($item->json, 'loreHash'))->first();
             $statGroup = StatGroup::byBungieId(data_get($item->json, 'stats.statGroupHash'))->first();
-            $item->stats = Collection::make(data_get($statGroup->json, 'scaledStats'))->map(function ($scaledStat) {
+            $item->stats = Collection::make(data_get($statGroup, 'json.scaledStats'))->map(function ($scaledStat) {
                 return Stat::byBungieId(data_get($scaledStat, 'statHash'))->first();
             });
         });

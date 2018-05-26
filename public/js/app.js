@@ -15563,6 +15563,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -15600,10 +15608,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         itemIcon: function itemIcon() {
-            return 'https://www.bungie.net' + this.item.displayProperties.icon;
+            return 'https://www.bungie.net' + this.item.icon;
         },
         itemScreenshot: function itemScreenshot() {
             return 'https://www.bungie.net' + this.item.screenshot;
+        },
+        formattedLore: function formattedLore() {
+            return this.item.lore.description.replace(/(?:\r\n|\r|\n)/g, '<br>');
         }
     }
 });
@@ -16490,7 +16501,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex flex-wrap" }, [
+  return _c("div", { staticClass: "flex flex-wrap self-center" }, [
     _c(
       "div",
       {
@@ -16498,37 +16509,68 @@ var render = function() {
           "rounded rounded-t-lg overflow-hidden shadow max-w-md my-3 bg-grey-dark"
       },
       [
-        _c("img", {
-          staticClass: "w-full",
-          attrs: {
-            src: this.itemScreenshot,
-            alt: this.item.displayProperties.name
-          }
-        }),
+        _vm.item.screenshot
+          ? _c("img", {
+              staticClass: "w-full",
+              attrs: { src: _vm.itemScreenshot, alt: _vm.item.name }
+            })
+          : _vm._e(),
         _vm._v(" "),
-        _c("div", { staticClass: "flex justify-center -mt-8 w-32 h-32" }, [
+        _c("div", { staticClass: "flex justify-center -mt-8" }, [
           _c("img", {
             staticClass:
-              "rounded-full border-solid border-white border-2 -mt-3",
-            attrs: { src: this.itemIcon, alt: this.item.displayProperties.name }
+              "rounded-full border-solid border-white border-2 -mt-3 w-32 h-32",
+            attrs: { src: _vm.itemIcon, alt: _vm.item.name }
           })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "text-center px-3 pb-4 pt-2" }, [
           _c("h3", { staticClass: "text-white text-md bold font-sans" }, [
-            _vm._v(_vm._s(this.item.displayProperties.name))
+            _vm._v(_vm._s(_vm.item.name))
           ]),
           _vm._v(" "),
           _c("p", { staticClass: "mt-2 font-sans font-medium text-white" }, [
             _vm._v(
               "\n                " +
-                _vm._s(this.item.displayProperties.description) +
+                _vm._s(_vm.item.description) +
                 "\n            "
             )
           ])
         ])
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm.item.lore
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "rounded rounded-t-lg overflow-hidden shadow max-w-md my-3 bg-grey-dark"
+          },
+          [
+            _c("div", { staticClass: "text-center px-3 pb-4 pt-2" }, [
+              _c("h3", { staticClass: "text-white text-md bold font-sans" }, [
+                _vm._v("Lore")
+              ]),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  staticClass: "mt-2 font-sans font-medium text-white",
+                  domProps: { innerHTML: _vm._s(_vm.formattedLore) }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.formattedLore) +
+                      "\n            "
+                  )
+                ]
+              )
+            ])
+          ]
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []

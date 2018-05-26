@@ -23,7 +23,7 @@ class Xur
             return tap(
                 InventoryItem::byBungieId($item['itemHash'])->first(),
                 function (InventoryItem $inventoryItem) use ($item) {
-                    $inventoryItem->cost        = InventoryItem::byBungieId($item['costs'][0]['itemHash'])->first();
+                    $inventoryItem->cost = InventoryItem::byBungieId($item['costs'][0]['itemHash'])->first();
                     $inventoryItem->cost_amount = $item['costs'][0]['quantity'];
                 }
             );
@@ -35,20 +35,21 @@ class Xur
     private function transformItemIntoSlackAttachment(InventoryItem $item): array
     {
         return [
-            'title'     => data_get($item, 'json.displayProperties.name', ''),
-            'text'      => data_get($item, 'json.displayProperties.description', ''),
-            'thumb_url' => 'https://www.bungie.net' . data_get($item, 'json.displayProperties.icon', ''),
-            'fields'    => [
+            'title'      => data_get($item, 'json.displayProperties.name', ''),
+            'title_link' => config('app.url') . '/destiny2/items/' . data_get($item, 'json.hash'),
+            'text'       => data_get($item, 'json.displayProperties.description', ''),
+            'thumb_url'  => 'https://www.bungie.net' . data_get($item, 'json.displayProperties.icon', ''),
+            'fields'     => [
                 [
                     'title' => 'Cost',
                     'value' => Str::lower($item->cost_amount . ' ' . data_get(
-                        $item->cost,
-                        'json.displayProperties.name',
-                        ''
-                    )),
+                            $item->cost,
+                            'json.displayProperties.name',
+                            ''
+                        )),
                 ],
             ],
-            'color'     => $this->getColor(data_get($item, 'json.itemType'), data_get($item, 'json.classType')),
+            'color'      => $this->getColor(data_get($item, 'json.itemType'), data_get($item, 'json.classType')),
         ];
     }
 
