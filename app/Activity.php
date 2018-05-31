@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property array $json
  * @property \Illuminate\Support\Collection|Modifier[] $modifiers
+ * @property \Illuminate\Support\Collection|InventoryItem[] $rewards
+ * @property Destination $destination
+ * @property Place $place
+ * @property \Illuminate\Support\Collection|Challenge[] $challenges
+ * @property ActivityMode $mode
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Activity byBungieId($id)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Activity whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Activity whereJson($value)
