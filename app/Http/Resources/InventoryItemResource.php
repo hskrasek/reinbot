@@ -25,7 +25,9 @@ class InventoryItemResource extends JsonResource
                 return data_get($this->class->json, 'displayProperties.name');
             }),
             'lore'        => LoreResource::make($this->lore),
-            'stats'       => StatResource::collection($this->stats),
+            'stats'       => $this->when(null !== $this->stats, function () {
+                return StatResource::collection($this->stats);
+            }),
             'json'        => $this->when($request->has('debug'), $this->json),
         ];
     }
