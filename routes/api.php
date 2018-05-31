@@ -28,3 +28,7 @@ Route::get('items', function () {
 Route::get('items/{id}', [
     'uses' => 'ApiController@getItem',
 ]);
+
+Route::get('activities/{id}', [
+    'uses' => 'ApiController@getActivity',
+]);
