@@ -20,4 +20,9 @@ class ChallengeRepository
             return $value['activityHash'] === $activity->id || ($value['activityHash'] - 4294967296) === $activity->id;
         }), 'objectiveHash'))->get();
     }
+
+    public function getChallengesForActivity(Activity $activity): Collection
+    {
+        return Challenge::whereBungieIdIn(data_get($activity, 'json.challenges.*.objectiveHash'))->get();
+    }
 }
