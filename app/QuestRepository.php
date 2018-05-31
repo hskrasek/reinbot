@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Repositories\ActivityRepository;
 use Illuminate\Support\Collection;
 
 class QuestRepository
