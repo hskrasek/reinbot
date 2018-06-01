@@ -8,6 +8,7 @@ import VueRouter from 'vue-router'
 import App from './views/App'
 import Item from './views/Item';
 import Activity from './views/Activity';
+import Backhouse from './views/Backhouse';
 
 Vue.use(VueRouter);
 
@@ -17,19 +18,25 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/items/:id',
+            path: '/destiny2/items/:id',
             name: 'item',
             component: Item,
             props: true
         },
         {
-            path: '/activities/:id',
+            path: '/destiny2/activities/:id',
             name: 'activity',
             component: Activity,
             props: true
+        },
+        {
+            path: '/backhouse',
+            name: 'backhouse',
+            component: Backhouse,
+            props: false
         }
     ],
-    base: '/destiny2/'
+    base: '/'
 });
 
 const app = new Vue({

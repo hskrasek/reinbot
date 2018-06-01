@@ -32,3 +32,11 @@ Route::get('items/{id}', [
 Route::get('activities/{id}', [
     'uses' => 'ApiController@getActivity',
 ]);
+
+Route::get('commands', [
+    'uses' => 'ApiController@getCommands',
+]);
+
+Route::post('commands/{name}/runs', [
+    'uses' => 'ApiController@runCommand',
+]);

@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/destiny2/{any}', [
+Route::get('{any}', [
     'uses' => 'SpaController',
 ])->where('any', '.*');
