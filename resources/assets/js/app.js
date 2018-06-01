@@ -7,6 +7,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './views/App'
 import Item from './views/Item';
+import Activity from './views/Activity';
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,12 @@ const router = new VueRouter({
             path: '/items/:id',
             name: 'item',
             component: Item,
+            props: true
+        },
+        {
+            path: '/activities/:id',
+            name: 'activity',
+            component: Activity,
             props: true
         }
     ],

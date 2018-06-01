@@ -387,7 +387,7 @@ Object.assign(THREE.TGXLoader.prototype, {
 
 		function itemAsset(itemIndex, itemHash) {
 			gearAsset(itemHash, function(item) {
-				//console.log('LoadedItem['+itemIndex+']', item);
+				//console.log('LoadedItem['+itemIndex+']', activity);
 				items[itemIndex] = item;
 			});
 		}
@@ -462,7 +462,7 @@ Object.assign(THREE.TGXLoader.prototype, {
 
 		loadedTotal = options.itemHashes.length*2;
 
-		// Only load the single ornamentHash when there is only one item
+		// Only load the single ornamentHash when there is only one activity
 		var defaultOrnamentHash = options.itemHashes.length == 1 ? options.ornamentHash : 0;
 
 		for (var i=0; i<options.itemHashes.length; i++) {
@@ -2724,7 +2724,7 @@ Object.assign(THREE.TGXLoader.prototype, {
 			for (var i=0; i<items.length; i++) {
 				var item = items[i];
 				var shader = item.shaderHash ? shaders[item.shaderHash] : null;
-				//console.log('ParseGearAsset['+i+']', item, shader);
+				//console.log('ParseGearAsset['+i+']', activity, shader);
 				loadAssetManifest(item);
 				if (shader) loadAssetManifest(shader);
 			}

@@ -11157,7 +11157,7 @@
 			return output;
 
 			// extract data from the cache hash
-			// remove metadata on each item
+			// remove metadata on each activity
 			// and return as array
 			function extractFromCache( cache ) {
 
@@ -20817,7 +20817,7 @@
 
 			}
 
-			// recycle existing render item or grow the array
+			// recycle existing render activity or grow the array
 
 			var renderItem = array[ index ];
 
