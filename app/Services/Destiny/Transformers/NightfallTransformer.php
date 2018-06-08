@@ -23,6 +23,7 @@ class NightfallTransformer extends AbstractTransformer
                 'json.displayProperties.name',
                 data_get($milestone, 'json.displayProperties.name')
             ),
+            'title_link' => config('app.url') . '/destiny2/activities/' . data_get($activity, 'json.hash'),
             'text'      => data_get(
                 $activity,
                 'json.displayProperties.description',

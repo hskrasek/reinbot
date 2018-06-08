@@ -21,19 +21,22 @@ class LeviathanTransformer extends AbstractTransformer
     public function __invoke(Milestone $milestone): array
     {
         /** @var Quest $quest */
-        $quest    = $milestone->quests->first();
+        $quest = $milestone->quests->first();
+        /** @var Activity $activity */
+        $activity = $quest->activity;
         $thumbUrl = data_get($quest, 'json.displayProperties.icon', '');
 
         return [
-            'title'     => data_get($quest, 'json.displayProperties.name', ''),
-            'text'      => data_get(
+            'title'      => data_get($quest, 'json.displayProperties.name', ''),
+            'title_link' => config('app.url') . '/destiny2/activities/' . data_get($activity, 'json.hash'),
+            'text'       => data_get(
                 $milestone,
                 'json.quests.' . sprintf('%u', $quest->id & 0xFFFFFFFF) . '.displayProperties.description',
                 ''
             ),
-            'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
-            'fields'    => $this->buildChallengesArray($quest),
-            'color'     => '#1C0B3C',
+            'thumb_url'  => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
+            'fields'     => $this->buildChallengesArray($quest),
+            'color'      => '#1C0B3C',
         ];
     }
 

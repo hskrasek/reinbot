@@ -3,13 +3,14 @@
 namespace App\Services\Destiny\Transformers;
 
 use App\Milestone;
+use App\Quest;
 
 class CrimsonDaysTransformer extends AbstractTransformer
 {
     public function __invoke(Milestone $milestone): array
     {
         /** @var Quest $quest */
-        $quest    = $milestone->quests->first();
+        $quest = $milestone->quests->first();
         $thumbUrl = data_get($quest, 'json.displayProperties.icon', '');
 
         return [
