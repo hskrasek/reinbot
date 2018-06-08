@@ -13,7 +13,7 @@ class InventoryItemResource extends JsonResource
      *
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'id'          => data_get($this->json, 'hash'),
@@ -24,9 +24,14 @@ class InventoryItemResource extends JsonResource
             'class'       => $this->when(null !== $this->class, function () {
                 return data_get($this->class->json, 'displayProperties.name');
             }),
-            'lore'        => LoreResource::make($this->lore),
+            'lore'        => $this->when(null !== $this->lore, function () {
+                return LoreResource::make($this->lore);
+            }),
             'stats'       => $this->when(null !== $this->stats, function () {
                 return StatResource::collection($this->stats);
+            }),
+            'sockets'     => $this->when(!empty($this->sockets), function () {
+                return InventoryItemResource::collection($this->sockets);
             }),
             'json'        => $this->when($request->has('debug'), $this->json),
         ];

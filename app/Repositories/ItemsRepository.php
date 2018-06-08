@@ -22,6 +22,10 @@ class ItemsRepository
             $item->stats = Collection::make(data_get($statGroup, 'json.scaledStats'))->map(function ($scaledStat) {
                 return Stat::byBungieId(data_get($scaledStat, 'statHash'))->first();
             });
+            $item->sockets = Collection::make(data_get($item, 'json.sockets.socketEntries.*.singleInitialItemHash'))
+                ->map(function ($id) {
+                    return InventoryItem::byBungieId($id)->first();
+                });
         });
     }
 }
