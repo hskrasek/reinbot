@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property array $json
+ * @property Carbon $startDate
+ * @property Carbon $endDate
  * @property \Illuminate\Support\Collection|Quest[] $quests
  * @property \Illuminate\Support\Collection|Activity[] $activities
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Milestone byBungieId($id)

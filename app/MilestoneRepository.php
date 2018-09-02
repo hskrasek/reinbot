@@ -1,6 +1,7 @@
 <?php namespace App;
 
 use App\Repositories\ActivityRepository;
+use Carbon\Carbon;
 
 class MilestoneRepository
 {
@@ -36,6 +37,9 @@ class MilestoneRepository
                         array_pluck(array_get($apiManifest, 'activities', []), 'activityHash')
                     );
                 }
+
+                $milestone->startDate = Carbon::parse($apiManifest['startDate']);
+                $milestone->endDate   = Carbon::parse($apiManifest['endDate']);
 
                 return $milestone;
             }
