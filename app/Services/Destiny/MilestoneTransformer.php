@@ -30,11 +30,14 @@ class MilestoneTransformer
             case 463010297:
                 return (new FlashpointTransformer)($milestone);
             case 3660836525:
+            case 2986584050:
+            case 2683538554:
                 return (new LeviathanTransformer)($milestone);
             case 3245985898:
                 // TODO: Find a way to include all the meditations quests
                 return (new MeditationsTransformer)($milestone);
             case 3603098564:
+            case 4253138191:
                 return (new ClanXPTransformer)($milestone);
             case 1718587363:
                 return (new FactionRallyTransformer)($milestone);
@@ -46,6 +49,8 @@ class MilestoneTransformer
                 return (new HeroicStrikesTransformer)($milestone);
             case 120184767:
                 return (new CrimsonDaysTransformer)($milestone);
+            // case 534869653:
+            //     //XUR
         }
 
         return [];
