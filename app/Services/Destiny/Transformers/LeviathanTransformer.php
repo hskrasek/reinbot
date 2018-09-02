@@ -31,7 +31,7 @@ class LeviathanTransformer extends AbstractTransformer
                 'json.displayProperties.description',
                 ''
             ),
-            'thumb_url'  => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
+            'thumb_url'  => 'https://www.bungie.net' . $thumbUrl,
             // 'fields'     => $this->buildChallengesArray($activity),
             'color'      => '#1C0B3C',
         ];
