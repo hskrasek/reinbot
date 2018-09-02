@@ -38,4 +38,11 @@ class Activity extends Model
     {
         return $query->where('id', $id)->orWhere('id', $id - 4294967296);
     }
+
+    public function scopeWhereBungieIdIn($query, array $ids)
+    {
+        return $query->whereIn('id', $ids)->orWhereIn('id', array_map(function ($id) {
+            return $id - 4294967296;
+        }, $ids));
+    }
 }

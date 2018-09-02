@@ -1,5 +1,7 @@
 <?php namespace App;
 
+use App\Repositories\ActivityRepository;
+
 class MilestoneRepository
 {
     /**
@@ -7,9 +9,15 @@ class MilestoneRepository
      */
     private $quests;
 
-    public function __construct(QuestRepository $quests)
+    /**
+     * @var ActivityRepository
+     */
+    private $activities;
+
+    public function __construct(QuestRepository $quests, ActivityRepository $activities)
     {
-        $this->quests = $quests;
+        $this->quests     = $quests;
+        $this->activities = $activities;
     }
 
     public function getMilestoneFromManifest(array $apiManifest): Milestone
@@ -22,6 +30,12 @@ class MilestoneRepository
                     'availableQuests',
                     []
                 ));
+
+                if (array_has($apiManifest, 'activities')) {
+                    $milestone->activities = $this->activities->getActivities(
+                        array_pluck(array_get($apiManifest, 'activities', []), 'activityHash')
+                    );
+                }
 
                 return $milestone;
             }

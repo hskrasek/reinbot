@@ -21,6 +21,11 @@ class ActivityRepository
         $this->challenges = $challenges;
     }
 
+    public function getActivities(array $hashes): Collection
+    {
+        return Activity::whereBungieIdIn($hashes)->get();
+    }
+
     public function getActivityByHash(int $hash): ?Activity
     {
         return tap(Activity::byBungieId($hash)->first(), function (Activity $activity) {
