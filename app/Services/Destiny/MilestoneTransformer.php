@@ -6,6 +6,7 @@ use App\Services\Destiny\Transformers\ClanXPTransformer;
 use App\Services\Destiny\Transformers\CrimsonDaysTransformer;
 use App\Services\Destiny\Transformers\FactionRallyTransformer;
 use App\Services\Destiny\Transformers\FlashpointTransformer;
+use App\Services\Destiny\Transformers\HeroicStoryMissionTransformer;
 use App\Services\Destiny\Transformers\HeroicStrikesTransformer;
 use App\Services\Destiny\Transformers\IronBannerTransformer;
 use App\Services\Destiny\Transformers\LeviathanTransformer;
@@ -49,6 +50,12 @@ class MilestoneTransformer
                 return (new HeroicStrikesTransformer)($milestone);
             case 120184767:
                 return (new CrimsonDaysTransformer)($milestone);
+            case 3082135827:
+            case 157823523:
+            case 1437935813:
+            case 3448738070:
+                return (new HeroicStoryMissionTransformer)($milestone);
+
             // case 534869653:
             //     //XUR
         }

@@ -57,7 +57,7 @@ class PostMilestones extends Command
 
         $attachments = $milestones->map(function (array $milestone) {
             return $this->milestones->getMilestoneFromManifest($milestone);
-        })->except(4253138191)->map(function (Milestone $milestone) {
+        })->map(function (Milestone $milestone) {
             return MilestoneTransformer::transform($milestone);
         });
 

@@ -23,21 +23,35 @@ class ActivityRepository
 
     public function getActivities(array $hashes): Collection
     {
-        return Activity::whereBungieIdIn($hashes)->get();
-    }
-
-    public function getActivityByHash(int $hash): ?Activity
-    {
-        return tap(Activity::byBungieId($hash)->first(), function (Activity $activity) {
-            $activity->rewards = Collection::make(data_get($activity, 'json.rewards.*.rewardItems.*'))
+        return Activity::whereBungieIdIn($hashes)->get()->map(function (Activity $activity) {
+            $activity->rewards     = Collection::make(data_get($activity, 'json.rewards.*.rewardItems.*'))
                 ->pluck('itemHash')
                 ->map(function (int $itemHash) {
                     return InventoryItem::byBungieId($itemHash)->first();
                 });
             $activity->destination = Destination::byBungieId(data_get($activity, 'json.destinationHash'))->first();
-            $activity->place = Place::byBungieId(data_get($activity, 'json.placeHash'))->first();
-            $activity->challenges = $this->challenges->getChallengesForActivity($activity);
-            $activity->mode = ActivityMode::byBungieId(data_get($activity, 'json.directActivityModeHash'))->first();
+            $activity->place       = Place::byBungieId(data_get($activity, 'json.placeHash'))->first();
+            $activity->challenges  = $this->challenges->getChallengesForActivity($activity);
+            $activity->mode        = ActivityMode::byBungieId(data_get($activity, 'json.directActivityModeHash'))
+                ->first();
+
+            return $activity;
+        });
+    }
+
+    public function getActivityByHash(int $hash): ?Activity
+    {
+        return tap(Activity::byBungieId($hash)->first(), function (Activity $activity) {
+            $activity->rewards     = Collection::make(data_get($activity, 'json.rewards.*.rewardItems.*'))
+                ->pluck('itemHash')
+                ->map(function (int $itemHash) {
+                    return InventoryItem::byBungieId($itemHash)->first();
+                });
+            $activity->destination = Destination::byBungieId(data_get($activity, 'json.destinationHash'))->first();
+            $activity->place       = Place::byBungieId(data_get($activity, 'json.placeHash'))->first();
+            $activity->challenges  = $this->challenges->getChallengesForActivity($activity);
+            $activity->mode        = ActivityMode::byBungieId(data_get($activity, 'json.directActivityModeHash'))
+                ->first();
         });
     }
 
