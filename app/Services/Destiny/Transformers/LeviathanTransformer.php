@@ -20,35 +20,26 @@ class LeviathanTransformer extends AbstractTransformer
 
     public function __invoke(Milestone $milestone): array
     {
-        /** @var Quest $quest */
-        $quest = $milestone->quests->first();
-        /** @var Activity $activity */
-        $activity = $quest->activity;
-        $thumbUrl = data_get($quest, 'json.displayProperties.icon', '');
+        $activity = $milestone->activities->first();
+        $thumbUrl = data_get($milestone, 'json.displayProperties.icon', '');
 
         return [
-            'title'      => data_get($quest, 'json.displayProperties.name', ''),
+            'title'      => data_get($milestone, 'json.displayProperties.name', ''),
             'title_link' => config('app.url') . '/destiny2/activities/' . data_get($activity, 'json.hash'),
             'text'       => data_get(
                 $milestone,
-                'json.quests.' . sprintf('%u', $quest->id & 0xFFFFFFFF) . '.displayProperties.description',
+                'json.displayProperties.description',
                 ''
             ),
             'thumb_url'  => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
-            'fields'     => $this->buildChallengesArray($quest),
+            // 'fields'     => $this->buildChallengesArray($activity),
             'color'      => '#1C0B3C',
         ];
     }
 
-    private function buildChallengesArray(Quest $quest): array
+    private function buildChallengesArray(Activity $activity): array
     {
-        return $quest->challenges->map(function (Challenge $challenge) {
-            return [
-                'title' => data_get($challenge, 'json.displayProperties.name', ''),
-                'value' => data_get($challenge, 'json.displayProperties.description', ''),
-                'short' => true,
-            ];
-        })->push($this->getRaidRotation($quest->activity))->toArray();
+        return $this->getRaidRotation($activity);
     }
 
     private function getRaidRotation(Activity $activity): array
