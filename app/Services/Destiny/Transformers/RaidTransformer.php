@@ -7,7 +7,7 @@ use App\Challenge;
 use App\Milestone;
 use App\Quest;
 
-class LeviathanTransformer extends AbstractTransformer
+class RaidTransformer extends AbstractTransformer
 {
     private const ROTATIONS = [
         2693136605 => 'Gauntlet, Pleasure Gardens, Royal Pools',

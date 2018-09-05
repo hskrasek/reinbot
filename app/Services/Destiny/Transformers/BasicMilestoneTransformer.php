@@ -4,7 +4,7 @@ namespace App\Services\Destiny\Transformers;
 
 use App\Milestone;
 
-class HeroicStoryMissionTransformer extends AbstractTransformer
+class BasicMilestoneTransformer extends AbstractTransformer
 {
     public function __invoke(Milestone $milestone): array
     {

@@ -6,10 +6,10 @@ use App\Services\Destiny\Transformers\ClanXPTransformer;
 use App\Services\Destiny\Transformers\CrimsonDaysTransformer;
 use App\Services\Destiny\Transformers\FactionRallyTransformer;
 use App\Services\Destiny\Transformers\FlashpointTransformer;
-use App\Services\Destiny\Transformers\HeroicStoryMissionTransformer;
+use App\Services\Destiny\Transformers\BasicMilestoneTransformer;
 use App\Services\Destiny\Transformers\HeroicStrikesTransformer;
 use App\Services\Destiny\Transformers\IronBannerTransformer;
-use App\Services\Destiny\Transformers\LeviathanTransformer;
+use App\Services\Destiny\Transformers\RaidTransformer;
 use App\Services\Destiny\Transformers\MeditationsTransformer;
 use App\Services\Destiny\Transformers\NightfallTransformer;
 
@@ -20,7 +20,7 @@ class MilestoneTransformer
      *
      * @return array
      */
-    public static function transform(Milestone $milestone)
+    public static function transform(Milestone $milestone): array
     {
         //TODO: Match descriptions within the companion app if possible
         switch (sprintf('%u', $milestone->id & 0xFFFFFFFF)) {
@@ -33,7 +33,7 @@ class MilestoneTransformer
             case 3660836525:
             case 2986584050:
             case 2683538554:
-                return (new LeviathanTransformer)($milestone);
+                return (new RaidTransformer)($milestone);
             case 3245985898:
                 // TODO: Find a way to include all the meditations quests
                 return (new MeditationsTransformer)($milestone);
@@ -54,7 +54,7 @@ class MilestoneTransformer
             case 157823523:
             case 1437935813:
             case 3448738070:
-                return (new HeroicStoryMissionTransformer)($milestone);
+                return (new BasicMilestoneTransformer)($milestone);
 
             // case 534869653:
             //     //XUR
