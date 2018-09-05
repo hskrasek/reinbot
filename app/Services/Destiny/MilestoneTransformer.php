@@ -1,17 +1,17 @@
 <?php namespace App\Services\Destiny;
 
 use App\Milestone;
+use App\Services\Destiny\Transformers\BasicMilestoneTransformer;
 use App\Services\Destiny\Transformers\CallToArmsTransformer;
 use App\Services\Destiny\Transformers\ClanXPTransformer;
 use App\Services\Destiny\Transformers\CrimsonDaysTransformer;
 use App\Services\Destiny\Transformers\FactionRallyTransformer;
 use App\Services\Destiny\Transformers\FlashpointTransformer;
-use App\Services\Destiny\Transformers\BasicMilestoneTransformer;
 use App\Services\Destiny\Transformers\HeroicStrikesTransformer;
 use App\Services\Destiny\Transformers\IronBannerTransformer;
-use App\Services\Destiny\Transformers\RaidTransformer;
 use App\Services\Destiny\Transformers\MeditationsTransformer;
 use App\Services\Destiny\Transformers\NightfallTransformer;
+use App\Services\Destiny\Transformers\RaidTransformer;
 
 class MilestoneTransformer
 {
@@ -25,36 +25,36 @@ class MilestoneTransformer
         //TODO: Match descriptions within the companion app if possible
         switch (sprintf('%u', $milestone->id & 0xFFFFFFFF)) {
             case 2171429505:
-                return (new NightfallTransformer)($milestone);
+                return app()->call(NightfallTransformer::class, ['milestone' => $milestone], '__invoke');
             case 202035466:
-                return (new CallToArmsTransformer)($milestone);
+                return app()->call(CallToArmsTransformer::class, ['milestone' => $milestone], '__invoke');
             case 463010297:
-                return (new FlashpointTransformer)($milestone);
+                return app()->call(FlashpointTransformer::class, ['milestone' => $milestone], '__invoke');
             case 3660836525:
             case 2986584050:
             case 2683538554:
-                return (new RaidTransformer)($milestone);
+                return app()->call(RaidTransformer::class, ['milestone' => $milestone], '__invoke');
             case 3245985898:
                 // TODO: Find a way to include all the meditations quests
-                return (new MeditationsTransformer)($milestone);
+                return app()->call(MeditationsTransformer::class, ['milestone' => $milestone], '__invoke');
             case 3603098564:
             case 4253138191:
-                return (new ClanXPTransformer)($milestone);
+                return app()->call(ClanXPTransformer::class, ['milestone' => $milestone], '__invoke');
             case 1718587363:
-                return (new FactionRallyTransformer)($milestone);
+                return app()->call(FactionRallyTransformer::class, ['milestone' => $milestone], '__invoke');
             case 3205009061:
-                return (new FactionRallyTransformer)($milestone);
+                return app()->call(FactionRallyTransformer::class, ['milestone' => $milestone], '__invoke');
             case 4248276869:
-                return (new IronBannerTransformer)($milestone);
+                return app()->call(IronBannerTransformer::class, ['milestone' => $milestone], '__invoke');
             case 3405519164:
-                return (new HeroicStrikesTransformer)($milestone);
+                return app()->call(HeroicStrikesTransformer::class, ['milestone' => $milestone], '__invoke');
             case 120184767:
-                return (new CrimsonDaysTransformer)($milestone);
+                return app()->call(CrimsonDaysTransformer::class, ['milestone' => $milestone], '__invoke');
             case 3082135827:
             case 157823523:
             case 1437935813:
             case 3448738070:
-                return (new BasicMilestoneTransformer)($milestone);
+                return app()->call(BasicMilestoneTransformer::class, ['milestone' => $milestone], '__invoke');
 
             // case 534869653:
             //     //XUR

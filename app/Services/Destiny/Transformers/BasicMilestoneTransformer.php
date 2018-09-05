@@ -14,7 +14,6 @@ class BasicMilestoneTransformer extends AbstractTransformer
             'title'     => data_get($milestone, 'json.displayProperties.name', ''),
             'text'      => data_get($milestone, 'json.displayProperties.description', ''),
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
-            'color'     => '#121C4D',
         ];
     }
 }
