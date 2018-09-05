@@ -3,7 +3,6 @@
 use App\Activity;
 use App\Milestone;
 use App\Modifier;
-use App\Quest;
 
 class NightfallTransformer extends AbstractTransformer
 {
@@ -26,19 +25,19 @@ class NightfallTransformer extends AbstractTransformer
             ),
             'thumb_url' => empty($thumbUrl) ? $thumbUrl : $this->getInvertedIcon($thumbUrl),
             'image_url' => empty($imageUrl) ? $imageUrl : 'https://www.bungie.net' . $imageUrl,
-            // 'fields'    => $this->buildModifierArray($activity),
+            'fields'    => $this->buildFields($milestone),
             'color'     => '#526283',
         ];
     }
 
-    private function buildModifierArray(Activity $activity)
+    private function buildFields(Milestone $milestone): array
     {
-        return $activity->modifiers->map(function (Modifier $modifier) {
-            return [
-                'title' => data_get($modifier, 'json.displayProperties.name', ''),
-                'value' => data_get($modifier, 'json.displayProperties.description', ''),
-                'short' => true,
-            ];
-        })->toArray();
+        return [
+            [
+                'title' => 'Available Nightfall\'s This Week',
+                'value' => $milestone->activities->unique('id')->implode('json.displayProperties.description', PHP_EOL),
+                'short' => false,
+            ],
+        ];
     }
 }
