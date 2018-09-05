@@ -7,6 +7,7 @@ use App\Services\Destiny\Transformers\ClanXPTransformer;
 use App\Services\Destiny\Transformers\CrimsonDaysTransformer;
 use App\Services\Destiny\Transformers\FactionRallyTransformer;
 use App\Services\Destiny\Transformers\FlashpointTransformer;
+use App\Services\Destiny\Transformers\GuardianForAllTransformer;
 use App\Services\Destiny\Transformers\HeroicStrikesTransformer;
 use App\Services\Destiny\Transformers\IronBannerTransformer;
 use App\Services\Destiny\Transformers\MeditationsTransformer;
@@ -55,7 +56,8 @@ class MilestoneTransformer
             case 1437935813:
             case 3448738070:
                 return app()->call(BasicMilestoneTransformer::class, ['milestone' => $milestone], '__invoke');
-
+            case 536115997:
+                return app()->call(GuardianForAllTransformer::class, ['milestone' => $milestone], '__invoke');
             // case 534869653:
             //     //XUR
         }
