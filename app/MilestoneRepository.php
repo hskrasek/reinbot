@@ -17,7 +17,7 @@ class MilestoneRepository
 
     public function __construct(QuestRepository $quests, ActivityRepository $activities)
     {
-        $this->quests     = $quests;
+        $this->quests = $quests;
         $this->activities = $activities;
     }
 
@@ -38,8 +38,13 @@ class MilestoneRepository
                     );
                 }
 
-                $milestone->startDate = Carbon::parse($apiManifest['startDate']);
-                $milestone->endDate   = Carbon::parse($apiManifest['endDate']);
+                if (array_has($apiManifest, 'startDate')) {
+                    $milestone->startDate = Carbon::parse($apiManifest['startDate']);
+                }
+
+                if (array_has($apiManifest, 'endDate')) {
+                    $milestone->endDate = Carbon::parse($apiManifest['endDate']);
+                }
 
                 return $milestone;
             }
