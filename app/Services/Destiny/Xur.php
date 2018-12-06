@@ -43,10 +43,10 @@ class Xur
                 [
                     'title' => 'Cost',
                     'value' => Str::lower($item->cost_amount . ' ' . data_get(
-                            $item->cost,
-                            'json.displayProperties.name',
-                            ''
-                        )),
+                        $item->cost,
+                        'json.displayProperties.name',
+                        ''
+                    )),
                 ],
             ],
             'color'      => $this->getColor(data_get($item, 'json.itemType'), data_get($item, 'json.classType')),
