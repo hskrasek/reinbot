@@ -53,6 +53,8 @@ class Kernel extends ConsoleKernel
             ->weeklyOn(5, '10:50')
             ->timezone('America/Chicago')
             ->withoutOverlapping();
+
+        $schedule->command('telescope:prune --hours=48')->daily();
     }
 
     /**
