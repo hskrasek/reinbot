@@ -30,9 +30,13 @@ class Client
      * @return array
      * @throws \Exception
      */
-    public function get(string $endpoint): array
+    public function get(string $endpoint, ?array $components = []): array
     {
-        $response = $this->client->get(Str::endsWith($endpoint, '/') ? $endpoint : $endpoint . '/');
+        $response = $this->client->get(Str::endsWith($endpoint, '/') ? $endpoint : $endpoint . '/', [
+            'query' => [
+                'components' => implode(',', $components)
+            ]
+        ]);
 
         $response = json_decode((string)$response->getBody(), true);
 
