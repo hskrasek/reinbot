@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Destination whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Destination whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Destination newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Destination newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Destination query()
  */
 class Destination extends Model
 {

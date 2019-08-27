@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\StatGroup whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\StatGroup whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\StatGroup newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\StatGroup newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\StatGroup query()
  */
 class StatGroup extends Model
 {

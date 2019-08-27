@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Challenge whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Challenge whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Challenge newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Challenge newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Challenge query()
  */
 class Challenge extends Model
 {

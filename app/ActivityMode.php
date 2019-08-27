@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\ActivityMode whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\ActivityMode whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ActivityMode newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ActivityMode newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ActivityMode query()
  */
 class ActivityMode extends Model
 {

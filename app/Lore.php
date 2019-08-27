@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Lore whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Lore whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Lore newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Lore newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Lore query()
  */
 class Lore extends Model
 {

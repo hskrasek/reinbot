@@ -18,6 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\InventoryItem query()
  */
 class InventoryItem extends Model
 {
