@@ -14,9 +14,9 @@ require("laravel-mix-purgecss");
  |
  */
 
-mix.js("resources/assets/js/app.js", "public/js")
-    .copy(["resources/assets/js/three.js", "resources/assets/js/three.orbitcontrols.js", "resources/assets/js/three.tgxloader.js"], 'public/js')
-   .postCss("resources/assets/css/app.css", "public/css")
+mix.js("resources/js/app.js", "public/js")
+    .copy(["resources/js/three.js", "resources/js/three.orbitcontrols.js", "resources/js/three.tgxloader.js"], 'public/js')
+   .postCss("resources/css/app.css", "public/css")
    .tailwind()
    .purgeCss();
 
