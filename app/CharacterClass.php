@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\CharacterClass whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\CharacterClass whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CharacterClass newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CharacterClass newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CharacterClass query()
  */
 class CharacterClass extends Model
 {

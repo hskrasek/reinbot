@@ -2,10 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Milestone;
-use App\MilestoneRepository;
 use App\Services\Destiny\Client;
-use App\Services\Destiny\MilestoneTransformer;
+use App\Slack\BlockBuilder;
 use Illuminate\Console\Command;
 
 class PostMilestones extends Command
@@ -30,20 +28,20 @@ class PostMilestones extends Command
     private $client;
 
     /**
-     * @var MilestoneRepository
+     * @var BlockBuilder
      */
-    private $milestones;
+    private $blockBuilder;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(Client $client, MilestoneRepository $milestones)
+    public function __construct(Client $client, BlockBuilder $blockBuilder)
     {
         parent::__construct();
         $this->client = $client;
-        $this->milestones = $milestones;
+        $this->blockBuilder = $blockBuilder;
     }
 
     /**
@@ -55,25 +53,29 @@ class PostMilestones extends Command
     {
         $milestones = $this->client->getMilestones();
 
-        $attachments = $milestones->map(function (array $milestone) {
-            return $this->milestones->getMilestoneFromManifest($milestone);
-        })->map(function (Milestone $milestone) {
-            return MilestoneTransformer::transform($milestone);
-        });
+        $blocks = $this->blockBuilder->buildForMilestones($milestones->toArray());
+
+        // foreach ($salesItems as $index => $item) {
+        //     $itemsForSale[] = InventoryItem::where('id', $item['itemHash'])->orWhere(
+        //         'id',
+        //         $item['itemHash'] - 4294967296
+        //     )->first();
+        // }
 
         if ($this->option('debug')) {
-            $this->line('Dumping attachments');
-            dd($attachments->toArray());
+            $this->line('Dumping blocks');
+            dd(collect($blocks)->toArray());
         }
 
-        (new \GuzzleHttp\Client())->post(
-            config('services.destiny.slack_web_hook'),
-            [
-                'json' => [
-                    'text'        => 'Incoming transmission!',
-                    'attachments' => $attachments->filter()->toArray(),
-                ],
-            ]
-        );
+        $response = (new \GuzzleHttp\Client())->post('https://slack.com/api/chat.postMessage', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . env('SLACK_API_TOKEN'),
+            ],
+            'json'    => [
+                'channel' => 'G622FQ124',
+                'text'    => 'Incoming transmission!',
+                'blocks'  => $blocks,
+            ],
+        ]);
     }
 }

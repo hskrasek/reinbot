@@ -1,5 +1,6 @@
 <?php namespace App\Services\Destiny;
 
+use App\InventoryItem;
 use App\Token;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Support\Str;
@@ -57,30 +58,19 @@ class Client
         return $this->get('Manifest/');
     }
 
+    /**
+     * @return array|\App\InventoryItem[]
+     * @throws \Exception
+     */
     public function getXurInventory(): array
     {
-        $token = Token::latest()->first();
-        $response = $this->client->get('TigerXbox/Profile/4611686018429963408/Character/2305843009260880385/Vendors/2190858386/', [
-            'query' => [
-                'components' => 402
-            ],
-            'headers' => [
-                'Authorization' => "{$token->type} {$token->access_token}",
-            ],
-        ]);
+        $response = $this->get('Vendors', [402]);
 
-        $response = json_decode((string)$response->getBody(), true);
+        $sales = array_get($response, 'sales.data.2190858386.saleItems');
 
-        if (array_get($response, 'ErrorCode') !== 1) {
-            $this->log->error('destiny.api.error', [
-                'message' => array_get($response, 'Message'),
-                'status'  => array_get($response, 'ErrorStatus'),
-            ]);
-
-            throw new \Exception('There was an error calling the Destiny 2 API.');
-        }
-
-        return array_get($response, 'Response.sales.data', []);
+        return array_map(function ($item) {
+            return InventoryItem::byBungieId($item['itemHash'])->first();
+        }, $sales);
     }
 
     public function downloadManifest(string $manifestPath)

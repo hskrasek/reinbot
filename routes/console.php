@@ -64,3 +64,14 @@ Artisan::command('raid', function () {
         \Illuminate\Support\Facades\Storage::append('status.csv', $line);
     });
 });
+
+Artisan::command('destiny:manifest:lookup {type} {hash}', function ($type, $hash) {
+    $this->info("$type:$hash");
+
+    $item = DB::connection('destiny_manifest')->table($type)
+        ->where('id', $hash)
+        ->orWhere('id', $hash - 4294967296)
+        ->first();
+
+    dd(json_decode($item->json, true));
+});

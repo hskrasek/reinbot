@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Modifier query()
  */
 class Modifier extends Model
 {

@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Place whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Place whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Place newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Place newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Place query()
  */
 class Place extends Model
 {

@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Stat whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Stat whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Stat newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Stat newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Stat query()
  */
 class Stat extends Model
 {
