@@ -34,22 +34,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('destiny:milestones')
-            ->weeklyOn(2, '12:30')
-            ->timezone('America/Chicago')
-            ->withoutOverlapping();
 
-        $schedule->command('destiny:manifest', ['--force'])
-            ->everyThirtyMinutes()
-            ->timezone('America/Chicago')
-            ->withoutOverlapping();
-
-        $schedule->command('destiny:refresh-tokens')
-            ->weeklyOn(5, '10:50')
-            ->timezone('America/Chicago')
-            ->withoutOverlapping();
-
-        $schedule->command('telescope:prune --hours=48')->daily();
     }
 
     /**
