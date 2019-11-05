@@ -19,6 +19,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Activity whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Activity whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Activity newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Activity newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Activity query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Activity whereBungieIdIn($ids)
  */
 class Activity extends Model
 {

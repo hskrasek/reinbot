@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Slack\BlockBuilder;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
@@ -30,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->when(BlockBuilder::class)
+            ->needs('$milestoneMapping')
+            ->give(config('destiny.milestones'));
+
         $this->app->when(\App\Services\Destiny\Client::class)
             ->needs(Client::class)
             ->give(function () {

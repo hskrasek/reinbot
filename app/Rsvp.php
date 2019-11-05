@@ -19,6 +19,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Rsvp whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Rsvp whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Rsvp newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Rsvp newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Rsvp query()
  */
 class Rsvp extends Model
 {

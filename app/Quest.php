@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Quest query()
  */
 class Quest extends Model
 {

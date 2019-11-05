@@ -24,6 +24,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Plan query()
  */
 class Plan extends Model
 {

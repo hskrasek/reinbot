@@ -18,6 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Milestone whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Milestone whereJson($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Milestone newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Milestone newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Milestone query()
  */
 class Milestone extends Model
 {

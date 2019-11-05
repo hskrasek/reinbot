@@ -24,6 +24,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Token whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Token whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Token newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Token newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Token query()
  */
 class Token extends Model
 {
