@@ -44,11 +44,6 @@ class Kernel extends ConsoleKernel
             ->timezone('America/Chicago')
             ->withoutOverlapping();
 
-        $schedule->command('destiny:xur')
-            ->weeklyOn(5, '12:05')
-            ->timezone('America/Chicago')
-            ->withoutOverlapping();
-
         $schedule->command('destiny:refresh-tokens')
             ->weeklyOn(5, '10:50')
             ->timezone('America/Chicago')
